@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Interface GridGenerator
+ *
  * @package GameOfLife
  */
 interface GridGenerator

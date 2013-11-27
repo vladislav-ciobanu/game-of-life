@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Interface Replicator
+ *
  * @package GameOfLife
  */
 interface Replicator

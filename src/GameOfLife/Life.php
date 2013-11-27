@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Class Life
+ *
  * @package GameOfLife
  */
 class Life
@@ -25,14 +26,14 @@ class Life
 
     /**
      * @param GridGenerator $gridGenerator
-     * @param Replicator $replicator
-     * @param GridPrinter $gridPrinter
+     * @param Replicator    $replicator
+     * @param GridPrinter   $gridPrinter
      */
     public function __construct(GridGenerator $gridGenerator, Replicator $replicator, GridPrinter $gridPrinter)
     {
         $this->gridGenerator = $gridGenerator;
-        $this->replicator = $replicator;
-        $this->gridPrinter = $gridPrinter;
+        $this->replicator    = $replicator;
+        $this->gridPrinter   = $gridPrinter;
     }
 
     /**

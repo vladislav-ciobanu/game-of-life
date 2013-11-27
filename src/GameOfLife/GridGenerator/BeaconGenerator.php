@@ -6,6 +6,7 @@ use GameOfLife\CellState;
 
 /**
  * Class BeaconGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class BeaconGenerator extends ArrayGenerator

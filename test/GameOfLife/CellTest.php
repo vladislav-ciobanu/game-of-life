@@ -4,8 +4,9 @@ namespace GameOfLife;
 
 /**
  * Class CellTest
+ *
  * @package GameOfLife
- * @covers Cell
+ * @covers  Cell
  */
 class CellTest extends \PHPUnit_Framework_TestCase
 {

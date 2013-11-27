@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Interface GridPrinter
+ *
  * @package GameOfLife
  */
 interface GridPrinter

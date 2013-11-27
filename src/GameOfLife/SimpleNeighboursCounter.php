@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Class SimpleNeighboursCounter
+ *
  * @package GameOfLife
  */
 class SimpleNeighboursCounter implements NeighboursCounter

@@ -6,6 +6,7 @@ use GameOfLife\CellState;
 
 /**
  * Class GliderGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class GliderGenerator extends ArrayGenerator

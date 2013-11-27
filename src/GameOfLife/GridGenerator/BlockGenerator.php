@@ -6,6 +6,7 @@ use GameOfLife\CellState;
 
 /**
  * Class BlockGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class BlockGenerator extends ArrayGenerator

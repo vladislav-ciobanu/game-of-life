@@ -6,6 +6,7 @@ use GameOfLife\CellState;
 
 /**
  * Class ToadGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class ToadGenerator extends ArrayGenerator

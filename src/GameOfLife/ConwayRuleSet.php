@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Class ConwayRuleSet
+ *
  * @package GameOfLife
  */
 class ConwayRuleSet implements RuleSet

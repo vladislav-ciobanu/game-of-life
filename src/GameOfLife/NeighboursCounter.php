@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Interface NeighboursCounter
+ *
  * @package GameOfLife
  */
 interface NeighboursCounter

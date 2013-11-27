@@ -6,6 +6,7 @@ use GameOfLife\CellState;
 
 /**
  * Class BlinkerGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class BlinkerGenerator extends ArrayGenerator

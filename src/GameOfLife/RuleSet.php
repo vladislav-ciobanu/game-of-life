@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Interface RuleSet
+ *
  * @package GameOfLife
  */
 interface RuleSet

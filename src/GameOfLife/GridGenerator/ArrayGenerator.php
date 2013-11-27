@@ -9,6 +9,7 @@ use GameOfLife\GridGenerator;
 
 /**
  * Class ArrayGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class ArrayGenerator implements GridGenerator
@@ -31,7 +32,7 @@ class ArrayGenerator implements GridGenerator
      */
     public function generate()
     {
-        $numberOfRows = count($this->data);
+        $numberOfRows    = count($this->data);
         $numberOfColumns = count(current($this->data));
 
         $grid = new Grid($numberOfRows, $numberOfColumns);

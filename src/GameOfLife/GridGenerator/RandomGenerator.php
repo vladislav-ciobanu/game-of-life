@@ -9,6 +9,7 @@ use GameOfLife\GridGenerator;
 
 /**
  * Class RandomGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class RandomGenerator implements GridGenerator
@@ -52,7 +53,7 @@ class RandomGenerator implements GridGenerator
      */
     public function generate()
     {
-        $numberOfRows = mt_rand($this->minRows, $this->maxRows);
+        $numberOfRows    = mt_rand($this->minRows, $this->maxRows);
         $numberOfColumns = mt_rand($this->minCols, $this->maxCols);
 
         $grid = new Grid($numberOfRows, $numberOfColumns);

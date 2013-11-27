@@ -6,6 +6,7 @@ use GameOfLife\CellState;
 
 /**
  * Class RPentominoGenerator
+ *
  * @package GameOfLife\GridGenerator
  */
 class RPentominoGenerator extends ArrayGenerator
