@@ -4,9 +4,10 @@ namespace GameOfLife;
 
 /**
  * Class Grid
+ *
  * @package GameOfLife
  */
-class Grid implements \IteratorAggregate
+class Grid
 {
     /**
      * @var Cell[][]
@@ -42,10 +43,56 @@ class Grid implements \IteratorAggregate
     }
 
     /**
-     * @return \RecursiveArrayIterator|\Traversable
+     * @return Cell[][]
      */
-    public function getIterator()
+    public function getCells()
     {
-        return new \RecursiveArrayIterator($this->cells);
+        return $this->cells;
+    }
+
+    public function sortLinesByPosition()
+    {
+        ksort($this->cells);
+    }
+
+    public function sortColumnsByPosition()
+    {
+        foreach ($this->cells as &$line) {
+            ksort($line);
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinPositionX()
+    {
+        return key(reset($this->cells));
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxPositionX()
+    {
+        return $this->getMinPositionX() + count(reset($this->cells)) - 1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinPositionY()
+    {
+        reset($this->cells);
+
+        return key($this->cells);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxPositionY()
+    {
+        return $this->getMinPositionY() + count($this->cells) - 1;
     }
 } 

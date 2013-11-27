@@ -4,6 +4,7 @@ namespace GameOfLife;
 
 /**
  * Class Cell
+ *
  * @package GameOfLife
  */
 class Cell
@@ -30,7 +31,7 @@ class Cell
      */
     public function __construct($state, $positionX, $positionY)
     {
-        $this->state = $state;
+        $this->state     = $state;
         $this->positionX = $positionX;
         $this->positionY = $positionY;
     }
@@ -57,5 +58,13 @@ class Cell
     public function getPositionY()
     {
         return $this->positionY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAlive()
+    {
+        return CellState::ALIVE === $this->state;
     }
 }
