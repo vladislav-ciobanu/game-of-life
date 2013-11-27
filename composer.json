@@ -1,5 +1,6 @@
 {
     "name": "GameOfLife",
+    "type": "project",
     "description": "implementation of game of life",
     "keywords": [
         "game of life"
