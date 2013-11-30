@@ -35,109 +35,77 @@ class SimpleReplicator implements Replicator
      */
     public function replicate(Grid $grid)
     {
-        $minPosY = $grid->getMinPositionY();
-        $maxPosY = $grid->getMaxPositionY();
-        $minPosX = $grid->getMinPositionX();
-        $maxPosX = $grid->getMaxPositionX();
-
-        $newBorderInfo = 0;
-        $mask          = $this->getGridBorderBitMask();
+        $clonedGrid = clone $grid;
+        $clonedGrid->addBorder();
 
         $newGrid = new Grid();
 
         /* @var Cell[] $line */
-        foreach ($grid->getCells() as $posY => $line) {
-            foreach ($line as $posX => $cell) {
+        foreach ($clonedGrid->getCells() as $line) {
+            foreach ($line as $cell) {
 
-                $nbLivingNeighbours = $this->neighboursCounter->countLiving($grid, $cell);
+                $nbLivingNeighbours = $this->neighboursCounter->countLiving($clonedGrid, $cell);
                 $newCellState       = $this->ruleSet->apply($cell->getState(), $nbLivingNeighbours);
 
                 $cell = new Cell($newCellState, $cell->getPositionX(), $cell->getPositionY());
                 $newGrid->setCell($cell);
-
-                if (!$cell->isAlive()) {
-                    continue;
-                }
-
-                // this variable is later used to check which border do we have to add to the grid
-                $newBorderInfo |= ($mask['top'] * ($posY === $minPosY))
-                    | ($mask['bottom'] * ($posY === $maxPosY))
-                    | ($mask['left'] * ($posX === $minPosX))
-                    | ($mask['right'] * ($posX === $maxPosX));
             }
         }
 
-        $this->extendGrid($newGrid, $newBorderInfo);
+        $this->adjustGrid($newGrid);
 
         return $newGrid;
     }
 
     /**
-     * @return array
-     */
-    private function getGridBorderBitMask()
-    {
-        return array(
-            'top'    => 1,
-            'bottom' => 2,
-            'left'   => 4,
-            'right'  => 8,
-        );
-
-    }
-
-    /**
      * @param Grid $grid
-     * @param int  $newBorderInfo
      */
-    private function extendGrid(Grid $grid, $newBorderInfo)
-    {
-        $mask = $this->getGridBorderBitMask();
-
-        // check if a new top line should be added
-        ($newBorderInfo & $mask['top']) && $this->addNewLine($grid, $grid->getMinPositionY() - 1);
-
-        // check if a new bottom line should be added
-        ($newBorderInfo & $mask['bottom']) && $this->addNewLine($grid, $grid->getMaxPositionY() + 1);
-
-        // check if a new left column should be added
-        ($newBorderInfo & $mask['left']) && $this->addNewColumn($grid, $grid->getMinPositionX() - 1);
-
-        // check if a new right column should be added
-        ($newBorderInfo & $mask['right']) && $this->addNewColumn($grid, $grid->getMaxPositionX() + 1);
-    }
-
-    /**
-     * @param Grid $grid
-     * @param int  $posY
-     */
-    private function addNewLine(Grid $grid, $posY)
+    private function adjustGrid(Grid $grid)
     {
         $minPosX = $grid->getMinPositionX();
         $maxPosX = $grid->getMaxPositionX();
+        $minPosY = $grid->getMinPositionY();
+        $maxPosY = $grid->getMaxPositionY();
+
+        $removeTopLine     = true;
+        $removeBottomLine  = true;
+        $removeLeftColumn  = true;
+        $removeRightColumn = true;
 
         for ($i = $minPosX; $i <= $maxPosX; $i++) {
-            $cell = new Cell(CellState::DEAD, $i, $posY);
-            $grid->setCell($cell);
+            if ($this->isCellAlive($grid, $i, $minPosY)) {
+                $removeTopLine = false;
+            }
+
+            if ($this->isCellAlive($grid, $i, $maxPosY)) {
+                $removeBottomLine = false;
+            }
         }
 
-        $grid->sortLinesByPosition();
+        for ($i = $minPosY; $i <= $maxPosY; $i++) {
+            if ($this->isCellAlive($grid, $minPosX, $i)) {
+                $removeLeftColumn = false;
+            }
+
+            if ($this->isCellAlive($grid, $maxPosX, $i)) {
+                $removeRightColumn = false;
+            }
+        }
+
+        $removeTopLine && $grid->removeTopLine();
+        $removeBottomLine && $grid->removeBottomLine();
+        $removeLeftColumn && $grid->removeLeftColumn();
+        $removeRightColumn && $grid->removeRightColumn();
     }
 
     /**
      * @param Grid $grid
      * @param int  $posX
+     * @param int  $posY
+     * @return bool
      */
-    private function addNewColumn(Grid $grid, $posX)
+    private function isCellAlive(Grid $grid, $posX, $posY)
     {
-        $minPosY = $grid->getMinPositionY();
-        $maxPosY = $grid->getMaxPositionY();
-
-        for ($i = $minPosY; $i <= $maxPosY; $i++) {
-            $cell = new Cell(CellState::DEAD, $posX, $i);
-            $grid->setCell($cell);
-        }
-
-        $grid->sortColumnsByPosition();
+        return $grid->hasCell($posX, $posY) && $grid->getCell($posX, $posY)->isAlive();
     }
 } 
