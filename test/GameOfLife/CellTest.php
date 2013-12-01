@@ -62,4 +62,9 @@ class CellTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($this->positionY, $this->testSubject->getPositionY());
     }
+
+    public function testIsAliveWorksAsExpected()
+    {
+        $this->assertTrue($this->testSubject->isAlive());
+    }
 } 

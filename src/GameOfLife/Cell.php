@@ -32,8 +32,8 @@ class Cell
     public function __construct($state, $positionX, $positionY)
     {
         $this->state     = $state;
-        $this->positionX = $positionX;
-        $this->positionY = $positionY;
+        $this->positionX = (int) $positionX;
+        $this->positionY = (int) $positionY;
     }
 
     /**
@@ -43,6 +43,7 @@ class Cell
     {
         return $this->state;
     }
+
 
     /**
      * @return int
