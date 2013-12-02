@@ -2,8 +2,6 @@
 
 namespace GameOfLife\GridGenerator;
 
-use GameOfLife\CellState;
-
 /**
  * Class BlockGenerator
  *
@@ -14,10 +12,10 @@ class BlockGenerator extends ArrayGenerator
     public function __construct()
     {
         $data = array(
-            array(CellState::DEAD, CellState::DEAD, CellState::DEAD, CellState::DEAD),
-            array(CellState::DEAD, CellState::ALIVE, CellState::ALIVE, CellState::DEAD),
-            array(CellState::DEAD, CellState::ALIVE, CellState::ALIVE, CellState::DEAD),
-            array(CellState::DEAD, CellState::DEAD, CellState::DEAD, CellState::DEAD)
+            array(0, 0, 0, 0),
+            array(0, 1, 1, 0),
+            array(0, 1, 1, 0),
+            array(0, 0, 0, 0)
         );
 
         parent::__construct($data);

@@ -2,8 +2,6 @@
 
 namespace GameOfLife\GridGenerator;
 
-use GameOfLife\CellState;
-
 /**
  * Class SmallExploderGenerator
  *
@@ -14,10 +12,10 @@ class SmallExploderGenerator extends ArrayGenerator
     public function __construct()
     {
         $data = array(
-            array(CellState::DEAD, CellState::ALIVE, CellState::DEAD),
-            array(CellState::ALIVE, CellState::ALIVE, CellState::ALIVE),
-            array(CellState::ALIVE, CellState::DEAD, CellState::ALIVE),
-            array(CellState::DEAD, CellState::ALIVE, CellState::DEAD),
+            array(0, 1, 0),
+            array(1, 1, 1),
+            array(1, 0, 1),
+            array(0, 1, 0),
         );
 
         parent::__construct($data);

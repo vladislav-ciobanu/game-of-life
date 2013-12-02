@@ -2,8 +2,6 @@
 
 namespace GameOfLife\GridGenerator;
 
-use GameOfLife\CellState;
-
 /**
  * Class AcornGenerator
  *
@@ -14,9 +12,9 @@ class AcornGenerator extends ArrayGenerator
     public function __construct()
     {
         $data = array(
-            array(CellState::DEAD, CellState::ALIVE, CellState::DEAD, CellState::DEAD, CellState::DEAD, CellState::DEAD, CellState::DEAD),
-            array(CellState::DEAD, CellState::DEAD, CellState::DEAD, CellState::ALIVE, CellState::DEAD, CellState::DEAD, CellState::DEAD),
-            array(CellState::ALIVE, CellState::ALIVE, CellState::DEAD, CellState::DEAD, CellState::ALIVE, CellState::ALIVE, CellState::ALIVE),
+            array(0, 1, 0, 0, 0, 0, 0),
+            array(0, 0, 0, 1, 0, 0, 0),
+            array(1, 1, 0, 0, 1, 1, 1),
         );
 
         parent::__construct($data);

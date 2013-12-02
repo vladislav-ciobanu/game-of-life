@@ -2,8 +2,6 @@
 
 namespace GameOfLife\GridGenerator;
 
-use GameOfLife\CellState;
-
 /**
  * Class TenCellRowGenerator
  *
@@ -14,9 +12,7 @@ class TenCellRowGenerator extends ArrayGenerator
     public function __construct()
     {
         $data = array(
-            array(
-                CellState::ALIVE, CellState::ALIVE, CellState::ALIVE, CellState::ALIVE, CellState::ALIVE, 
-                CellState::ALIVE, CellState::ALIVE, CellState::ALIVE, CellState::ALIVE, CellState::ALIVE),
+            array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
         );
 
         parent::__construct($data);
