@@ -18,12 +18,12 @@ class CliGridPrinter implements GridPrinter
     );
 
     /**
-     * @var int
+     * @var int display delay in microseconds
      */
     private $displayDelay;
 
     /**
-     * @param int $displayDelay
+     * @param int $displayDelay display delay in microseconds
      */
     public function __construct($displayDelay = 100000)
     {
