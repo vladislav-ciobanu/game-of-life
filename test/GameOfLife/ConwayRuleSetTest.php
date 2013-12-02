@@ -19,12 +19,18 @@ class ConwayRuleSetTest extends \PHPUnit_Framework_TestCase
     {
         $this->testSubject = new ConwayRuleSet();
     }
- 
     
+    
+    public function testClassImplementsExpectedInterface()
+    {
+        $this->assertInstanceOf('GameOfLife\ConwayRuleSet', $this->testSubject);
+    }
+    
+
     /**
      * @param int $cellState
      * @param int $numberOfNeighbours
-     * @param int $newCellState
+     * @param int $expectedNewCellState
      * 
      * @dataProvider dataProvider
      */
