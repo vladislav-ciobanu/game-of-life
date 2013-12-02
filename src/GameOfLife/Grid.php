@@ -13,7 +13,49 @@ class Grid
      * @var Cell[][]
      */
     private $cells = array();
+    
+    
+    /**
+     * @var int
+     */
+    private $maxRowLimit;
+    
+    
+    /**
+     * @var int 
+     */
+    private $maxColumnLimit;
+    
 
+    /**
+     * @param null|int $maxRowLimit
+     * @param null|int $maxColumnLimit
+     */    
+    public function __construct($maxRowLimit = null, $maxColumnLimit = null)
+    {
+        $this->maxRowLimit    = $maxRowLimit;
+        $this->maxColumnLimit = $maxColumnLimit;
+    }
+    
+    
+    /**
+     * @return int
+     */
+    public function getMaxRowLimit()
+    {
+        return $this->maxRowLimit;
+    }
+
+        
+    /**
+     * @return int
+     */
+    public function getMaxColumnLimit()
+    {
+        return $this->maxColumnLimit;
+    }
+
+    
     /**
      * @param Cell $cell
      */
@@ -22,6 +64,7 @@ class Grid
         $this->cells[$cell->getPositionY()][$cell->getPositionX()] = $cell;
     }
 
+    
     /**
      * @param $positionX
      * @param $positionY
@@ -32,6 +75,7 @@ class Grid
         return isset($this->cells[$positionY][$positionX]);
     }
 
+    
     /**
      * @param $positionX
      * @param $positionY
@@ -41,6 +85,7 @@ class Grid
     {
         return $this->cells[$positionY][$positionX];
     }
+    
 
     /**
      * @return Cell[][]
@@ -49,6 +94,7 @@ class Grid
     {
         return $this->cells;
     }
+    
 
     /**
      * @return int
@@ -58,14 +104,16 @@ class Grid
         return key(reset($this->cells));
     }
 
+    
     /**
      * @return int
      */
     public function getMaxPositionX()
     {
-        return $this->getMinPositionX() + count(reset($this->cells)) - 1;
+        return $this->getMinPositionX() + $this->getNumberOfColumns() - 1;
     }
 
+    
     /**
      * @return int
      */
@@ -76,48 +124,61 @@ class Grid
         return key($this->cells);
     }
 
+    
     /**
      * @return int
      */
     public function getMaxPositionY()
     {
-        return $this->getMinPositionY() + count($this->cells) - 1;
+        return $this->getMinPositionY() + $this->getNumberOfRows() - 1;
     }
 
-    public function addTopLine()
+    
+    public function addTopRow()
     {
-        $this->addLine($this->getMinPositionY() - 1);
+        $this->addRow($this->getMinPositionY() - 1);
     }
 
-    public function addBottomLine()
+    
+    public function addBottomRow()
     {
-        $this->addLine($this->getMaxPositionY() + 1);
+        $this->addRow($this->getMaxPositionY() + 1);
     }
+    
 
     public function addLeftColumn()
     {
         $this->addColumn($this->getMinPositionX() - 1);
     }
+    
 
     public function addRightColumn()
     {
         $this->addColumn($this->getMaxPositionX() + 1);
     }
+    
 
     public function addBorder()
     {
-        $this->addTopLine();
-        $this->addBottomLine();
+        $this->addTopRow();
+        $this->addBottomRow();
         $this->addLeftColumn();
         $this->addRightColumn();
     }
 
+    
     /**
+     * 
      * @param int $posY
      * @param int $cellState
+     * @return void
      */
-    public function addLine($posY, $cellState = CellState::DEAD)
+    public function addRow($posY, $cellState = CellState::DEAD)
     {
+        if (null !== $this->maxRowLimit && $this->getNumberOfRows() >= $this->maxRowLimit) {
+            return;
+        }
+        
         $minPosX = $this->getMinPositionX();
         $maxPosX = $this->getMaxPositionX();
 
@@ -126,15 +187,21 @@ class Grid
             $this->setCell($cell);
         }
 
-        $this->sortLinesByPosition();
+        $this->sortRowsByPosition();
     }
+    
 
     /**
      * @param int $posX
      * @param int $cellState
+     * @return void
      */
     public function addColumn($posX, $cellState = CellState::DEAD)
     {
+        if (null !== $this->maxColumnLimit && $this->getNumberOfColumns() >= $this->maxColumnLimit) {
+            return;
+        }
+        
         $minPosY = $this->getMinPositionY();
         $maxPosY = $this->getMaxPositionY();
 
@@ -147,57 +214,82 @@ class Grid
     }
 
 
-    public function removeTopLine()
+    public function removeTopRow()
     {
-        $this->removeLine($this->getMinPositionY());
+        $this->removeRow($this->getMinPositionY());
     }
 
-    public function removeBottomLine()
+    
+    public function removeBottomRow()
     {
-        $this->removeLine($this->getMaxPositionY());
+        $this->removeRow($this->getMaxPositionY());
     }
 
+    
     public function removeLeftColumn()
     {
         $this->removeColumn($this->getMinPositionX());
     }
 
+    
     public function removeRightColumn()
     {
         $this->removeColumn($this->getMaxPositionX());
     }
 
+    
     /**
      * @param int $posY
      */
-    public function removeLine($posY)
+    public function removeRow($posY)
     {
         if (isset($this->cells[$posY])) {
             unset($this->cells[$posY]);
         }
     }
 
+    
     /**
      * @param int $posX
      */
     public function removeColumn($posX)
     {
-        foreach ($this->cells as &$line) {
-            if (isset($line[$posX])) {
-                unset($line[$posX]);
+        foreach ($this->cells as &$row) {
+            if (isset($row[$posX])) {
+                unset($row[$posX]);
             }
         }
     }
+    
+    
+    /**
+     * @return int
+     */
+    public function getNumberOfRows()
+    {
+        return count($this->cells);
+    }
 
-    private function sortLinesByPosition()
+
+    /**
+     * @return int
+     */
+    public function getNumberOfColumns()
+    {
+        return count(reset($this->cells));
+    }
+    
+    
+    private function sortRowsByPosition()
     {
         ksort($this->cells);
     }
 
+    
     private function sortColumnsByPosition()
     {
-        foreach ($this->cells as &$line) {
-            ksort($line);
+        foreach ($this->cells as &$row) {
+            ksort($row);
         }
     }
 }

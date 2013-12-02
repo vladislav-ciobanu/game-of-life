@@ -38,7 +38,7 @@ class SimpleReplicator implements Replicator
         $clonedGrid = clone $grid;
         $clonedGrid->addBorder();
 
-        $newGrid = new Grid();
+        $newGrid = new Grid($clonedGrid->getMaxRowLimit(), $clonedGrid->getMaxColumnLimit());
 
         /* @var Cell[] $line */
         foreach ($clonedGrid->getCells() as $line) {
@@ -92,8 +92,8 @@ class SimpleReplicator implements Replicator
             }
         }
 
-        $removeTopLine && $grid->removeTopLine();
-        $removeBottomLine && $grid->removeBottomLine();
+        $removeTopLine && $grid->removeTopRow();
+        $removeBottomLine && $grid->removeBottomRow();
         $removeLeftColumn && $grid->removeLeftColumn();
         $removeRightColumn && $grid->removeRightColumn();
     }

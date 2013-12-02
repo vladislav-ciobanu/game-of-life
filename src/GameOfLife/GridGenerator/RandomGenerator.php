@@ -49,14 +49,16 @@ class RandomGenerator implements GridGenerator
     }
 
     /**
+     * @param null|int $maxRowLimit
+     * @param null|int $maxColumnLimit
      * @return Grid
      */
-    public function generate()
+    public function generate($maxRowLimit = null, $maxColumnLimit = null)
     {
         $numberOfRows    = mt_rand($this->minRows, $this->maxRows);
         $numberOfColumns = mt_rand($this->minCols, $this->maxCols);
 
-        $grid = new Grid($numberOfRows, $numberOfColumns);
+        $grid = new Grid($maxRowLimit, $maxColumnLimit);
 
         for ($posY = 0; $posY < $numberOfRows; $posY++) {
             for ($posX = 0; $posX < $numberOfColumns; $posX++) {

@@ -28,14 +28,13 @@ class ArrayGenerator implements GridGenerator
     }
 
     /**
+     * @param null|int $maxRowLimit
+     * @param null|int $maxColumnLimit
      * @return Grid
      */
-    public function generate()
+    public function generate($maxRowLimit = null, $maxColumnLimit = null)
     {
-        $numberOfRows    = count($this->data);
-        $numberOfColumns = count(current($this->data));
-
-        $grid = new Grid($numberOfRows, $numberOfColumns);
+        $grid = new Grid($maxRowLimit, $maxColumnLimit);
 
         foreach ($this->data as $positionY => $line) {
             foreach ($line as $positionX => $value) {
