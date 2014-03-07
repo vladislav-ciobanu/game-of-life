@@ -2,6 +2,8 @@
 
 namespace GameOfLife;
 
+use \Symfony\Component\Console\Output\OutputInterface;
+
 /**
  * Class CliGridPrinter
  *
@@ -18,6 +20,11 @@ class CliGridPrinter implements GridPrinter
     );
 
     /**
+     *
+     * @var OutputInterface
+     */
+    private $output;
+    /**
      * @var int display delay in microseconds
      */
     private $displayDelay;
@@ -25,9 +32,10 @@ class CliGridPrinter implements GridPrinter
     /**
      * @param int $displayDelay display delay in microseconds
      */
-    public function __construct($displayDelay = 100000)
+    public function __construct(OutputInterface $output, $displayDelay = 100000)
     {
         $this->displayDelay = $displayDelay;
+        $this->output = $output;
     }
 
     /**
@@ -47,9 +55,10 @@ class CliGridPrinter implements GridPrinter
 
         $output .= PHP_EOL;
 
-        echo $output;
+        $this->output->write($output);
+        //echo $output;
 
-        ob_flush();
+        //ob_flush();
 
         if ($this->displayDelay > 0) {
             usleep($this->displayDelay);
