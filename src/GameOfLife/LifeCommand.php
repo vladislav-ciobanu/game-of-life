@@ -44,7 +44,14 @@ class LifeCommand extends Command
                InputOption::VALUE_REQUIRED,
                'Maximum number of grid columns',
                40
-            )    
+            )
+            ->addOption(
+               'generator',
+               null,
+               InputOption::VALUE_REQUIRED,
+               'The grid generator, see the list-generators command',
+               'Random'
+            )                
         ;
     }
 
@@ -55,7 +62,7 @@ class LifeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $life = new Life(
-            new GridGenerator\RandomGenerator(),
+            $this->getGridGenerator($input->getOption('generator')),
             new SimpleReplicator(new ConwayRuleSet(), new SimpleNeighboursCounter()),
             new CliGridPrinter($output)
         );
@@ -65,5 +72,19 @@ class LifeCommand extends Command
             $input->getOption('maxRowLimit'),   
             $input->getOption('maxColumnLimit')
         );
+    }
+    
+    /**
+     * 
+     * @param string $generator
+     * @return GridGenerator
+     */
+    private function getGridGenerator($generator)
+    {
+        if (empty($generator)) {
+            return new GridGenerator\RandomGenerator();
+        }
+        
+        return GridGeneratorFactory::getGridGeneratorInstance($generator);
     }
 }
