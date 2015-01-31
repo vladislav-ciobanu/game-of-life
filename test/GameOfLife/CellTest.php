@@ -6,7 +6,7 @@ namespace GameOfLife;
  * Class CellTest
  *
  * @package GameOfLife
- * @covers  Cell
+ * @covers  \GameOfLife\Cell
  */
 class CellTest extends \PHPUnit_Framework_TestCase
 {

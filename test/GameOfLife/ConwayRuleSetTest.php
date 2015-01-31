@@ -6,6 +6,7 @@ namespace GameOfLife;
  * Class ConwayRuleSetTest
  *
  * @package GameOfLife
+ * @covers  \GameOfLife\ConwayRuleSet
  */
 class ConwayRuleSetTest extends \PHPUnit_Framework_TestCase
 {

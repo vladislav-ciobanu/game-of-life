@@ -6,6 +6,7 @@ namespace GameOfLife;
  * Class SimpleNeighboursCounterTest
  *
  * @package GameOfLife
+ * @covers  \GameOfLife\SimpleNeighboursCounter
  */
 class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
 {
