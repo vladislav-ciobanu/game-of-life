@@ -20,21 +20,25 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
     {
         $this->testSubject = new SimpleNeighboursCounter();
     }
-    
-    
+
     public function testClassImplementsExpectedInterface()
     {
         $this->assertInstanceOf('GameOfLife\NeighboursCounter', $this->testSubject);
     }
-    
-    
-    public function testCountLivingwhenGridEmptyReturnsZeroNeighbours()
+
+    /**
+     * @covers  \GameOfLife\SimpleNeighboursCounter::countLiving
+     */
+    public function testCountLivingWhenGridEmptyReturnsZeroNeighbours()
     {
         $result = $this->testSubject->countLiving(new Grid(), new Cell(0, 0, 0));
         $this->assertEmpty($result);
     }
-    
-    
+
+
+    /**
+     * @covers  \GameOfLife\SimpleNeighboursCounter::countLiving
+     */
     public function testCountLivingReturnExpectedNumberOfNeighbours()
     {
         $cellToCheck = new Cell(CellState::DEAD, 0, 0);

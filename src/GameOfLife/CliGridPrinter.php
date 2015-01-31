@@ -30,7 +30,8 @@ class CliGridPrinter implements GridPrinter
     private $displayDelay;
 
     /**
-     * @param int $displayDelay display delay in microseconds
+     * @param OutputInterface $output
+     * @param int             $displayDelay
      */
     public function __construct(OutputInterface $output, $displayDelay = 100000)
     {
@@ -56,9 +57,6 @@ class CliGridPrinter implements GridPrinter
         $output .= PHP_EOL;
 
         $this->output->write($output);
-        //echo $output;
-
-        //ob_flush();
 
         if ($this->displayDelay > 0) {
             usleep($this->displayDelay);
