@@ -15,16 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class LifeCommand extends Command
 {
+    const LIST_SEP = ', ';
+
     protected function configure()
     {
         $this
             ->setName('play')
             ->setDescription('launches the game of life')
-            ->addArgument(
-                'name',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
-            )
             ->addOption(
                'maxNumberOfGenerations',
                null,
@@ -49,15 +46,16 @@ class LifeCommand extends Command
                'generator',
                null,
                InputOption::VALUE_REQUIRED,
-               'The grid generator, see the list-generators command',
+               'The grid generator: ' . $this->getGridGeneratorNames(),
                'Random'
             )                
         ;
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -86,5 +84,13 @@ class LifeCommand extends Command
         }
         
         return GridGeneratorFactory::getGridGeneratorInstance($generator);
+    }
+
+    /**
+     * @return string
+     */
+    private function getGridGeneratorNames()
+    {
+        return implode(self::LIST_SEP, GridGeneratorName::getGridGeneratorNameList());
     }
 }
