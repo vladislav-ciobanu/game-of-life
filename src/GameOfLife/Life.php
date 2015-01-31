@@ -38,6 +38,8 @@ class Life
 
     /**
      * @param null|int $maxNumberOfGenerations
+     * @param null|int $maxRowLimit
+     * @param null|int $maxColumnLimit
      */
     public function play($maxNumberOfGenerations = null, $maxRowLimit = null, $maxColumnLimit = null)
     {
