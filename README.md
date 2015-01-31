@@ -21,7 +21,7 @@ Installation
 ```shell
 git clone https://github.com/vladislav-ciobanu/game-of-life.git
 ```
-*   Inside the project root:
+*   Install dependencies:
 ```shell
 composer install
 ```
@@ -30,11 +30,11 @@ Usage
 --------------------
 All the commands should be executed inside the project root:
 
-*   List application help   
+*   List application help:
 ```shell
 bin/console
 ```
-*   Run the default configuration of the game:
+*   Run the game with the default configuration:
 ```shell
 bin/console play
 ```
