@@ -18,8 +18,8 @@ class SimpleNeighboursCounter implements NeighboursCounter
     {
         $nbLives = 0;
 
-        $posY = & $cell->getPositionY();
-        $posX = & $cell->getPositionX();
+        $posY = $cell->getPositionY();
+        $posX = $cell->getPositionX();
 
         for ($i = $posY - 1; $i <= $posY + 1; $i++) {
             for ($j = $posX - 1; $j <= $posX + 1; $j++) {
