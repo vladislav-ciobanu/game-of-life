@@ -5,15 +5,17 @@
     "keywords": [
         "game of life"
     ],
+    "license": "MIT",
     "homepage": "https://github.com/vladislav-ciobanu/game-of-life",
     "authors": [
         {
             "name": "Vladislav Ciobanu",
-            "email": "wladik_c@yahoo.com"
+            "email": "wladik_c@yahoo.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
-        "psr-0": {"GameOfLife\\": "src/"}
+        "psr-4": {"GameOfLife\\": "src/GameOfLife"}
     },
     "require": {
         "php": ">=5.3",
