@@ -28,6 +28,8 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \GameOfLife\SimpleNeighboursCounter::countLiving
+     * @uses    \GameOfLife\Cell
+     * @uses    \GameOfLife\Grid
      */
     public function testCountLivingWhenGridEmptyReturnsZeroNeighbours()
     {
@@ -38,6 +40,8 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \GameOfLife\SimpleNeighboursCounter::countLiving
+     * @uses    \GameOfLife\Cell
+     * @uses    \GameOfLife\Grid
      */
     public function testCountLivingReturnExpectedNumberOfNeighbours()
     {
