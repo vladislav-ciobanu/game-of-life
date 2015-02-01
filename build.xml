@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Game of Life" default="build" basedir=".">
+
+    <property name="base.dir" value="${project.basedir}"/>
+    <property name="src.dir" value="${base.dir}/src/"/>
+    <property name="test.dir" value="${base.dir}/test/"/>
+    <property name="build.dir" value="${base.dir}/build/"/>
+    <property name="logs.dir" value="${base.dir}/build/logs/"/>
+    <property name="api.dir" value="${base.dir}/build/api/"/>
+    <property name="code-browser.dir" value="${base.dir}/build/code-browser/"/>
+    <property name="vendor.bin" value="${base.dir}/vendor/bin/"/>
+    <property name="pdepend.dir" value="${base.dir}/build/pdepend/"/>
+    <property name="coverage.dir" value="${base.dir}/build/coverage/"/>
+
+
+    <target name="build" depends="clean,phpunit,pdepend,phpmd,phpcpd,phploc,phpcs,phpdoc,phpcb">
+        <echo msg="Building done" />
+    </target>
+
+    <target name="clean">
+        <echo msg="Preparing build directories" />
+        <delete dir="${logs.dir}" />
+        <delete dir="${api.dir}" />
+        <delete dir="${code-browser.dir}" />
+        <delete dir="${pdepend.dir}" />
+        <delete dir="${coverage.dir}" />
+        <!--<delete dir="${base.dir}/vendor"/>-->
+
+        <mkdir dir="${logs.dir}" />
+        <mkdir dir="${api.dir}" />
+        <mkdir dir="${code-browser.dir}" />
+        <mkdir dir="${pdepend.dir}" />
+        <mkdir dir="${coverage.dir}" />
+    </target>
+
+    <!--<target name="dependencies" description="Install dependencies">-->
+        <!--<exec logoutput="true" command="composer install" />-->
+    <!--</target>-->
+
+
+    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
+        <exec logoutput="true" checkreturn="true"
+              command="${vendor.bin}phpcb --log ${logs.dir} --source ${src.dir} --output ${code-browser.dir}" />
+    </target>
+
+    <target name="phpunit" description="Run unit tests using PHPUnit and generates junit.xml and clover.xml">
+        <exec logoutput="true" checkreturn="true"
+              command="${vendor.bin}phpunit --configuration ${base.dir}/phpunit.xml.dist --log-junit ${logs.dir}phpunit.junit.xml --coverage-clover ${logs.dir}phpunit.coverage.xml --coverage-html ${coverage.dir}coverage " />
+    </target>
+
+
+    <target name="pdepend" description="Generate jdepend.xml and software metrics charts using PHP_Depend">
+        <exec logoutput="true" checkreturn="true"
+              command="${vendor.bin}pdepend --jdepend-xml=${logs.dir}jdepend.xml --jdepend-chart=${pdepend.dir}dependencies.svg --overview-pyramid=${pdepend.dir}overview-pyramid.svg ${src.dir}" />
+    </target>
+
+    <target name="phpmd" description="Generate pmd.xml using PHPMD">
+        <exec logoutput="true" spawn="true" checkreturn="true"
+              command="${vendor.bin}phpmd ${src.dir} xml ${build.dir}/config/phpmd.xml --reportfile ${logs.dir}pmd.xml" />
+    </target>
+
+    <target name="phpcpd" description="Generate pmd-cpd.xml using PHPCPD">
+        <exec logoutput="true" checkreturn="true"
+              command="${vendor.bin}phpcpd --log-pmd ${logs.dir}pmd-cpd.xml ${src.dir}" />
+    </target>
+
+    <target name="phploc" description="Generate phploc.csv">
+        <exec logoutput="true" checkreturn="true"
+              command="${vendor.bin}phploc --log-csv ${logs.dir}phploc.csv --progress ${src.dir}" />
+    </target>
+
+    <target name="phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
+        <exec logoutput="true" checkreturn="true"
+              command="${vendor.bin}phpcs --report=checkstyle --report-file=${logs.dir}checkstyle.xml --standard=${build.dir}/config/phpcs.xml ${src.dir}" />
+    </target>
+
+    <target name="phpdoc" description="Generate API documentation using APIGen">
+        <exec logoutput="true" checkreturn="true"
+              command="${vendor.bin}phpdoc run -d ${src.dir} -t ${build.dir}api" />
+    </target>    
+    
+</project>

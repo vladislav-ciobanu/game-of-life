@@ -13,16 +13,20 @@ matrix:
 install: composer install --dev
 
 script:
-  - mkdir -p build/logs
-  - mkdir -p build/api
-  - vendor/bin/phpunit --configuration phpunit.xml.dist
-  - vendor/bin/phpmd src xml build/config/phpmd.xml --reportfile build/logs/pmd.xml
-  - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle-src.xml --standard=build/config/phpcs.xml src
-  - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle-test.xml --standard=build/config/phpcs.xml test
-  - vendor/bin/phpcpd src
-  - vendor/bin/pdepend --summary-xml=build/logs/pdepend.xml src
-  - vendor/bin/phpdoc run -d src -t build/api
-  - vendor/bin/phploc --log-csv build/logs/phploc.csv --progress src
+  - vendor/bin/phing
+#  - mkdir -p build/logs
+#  - mkdir -p build/api
+#  - mkdir -p build/code-browser
+#  - mkdir -p build/coverage
+#  - vendor/bin/phpunit --configuration phpunit.xml.dist --log-junit build/logs/phpunit.junit.xml --coverage-clover build/logs/phpunit.coverage.xml --coverage-html build/coverage
+#  - vendor/bin/phpmd src xml build/config/phpmd.xml --reportfile build/logs/pmd.xml
+#  - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle-src.xml --standard=build/config/phpcs.xml src
+#  - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle-test.xml --standard=build/config/phpcs.xml test
+#  - vendor/bin/phpcpd src
+#  - vendor/bin/pdepend --summary-xml=build/logs/pdepend.xml src
+#  - vendor/bin/phpdoc run -d src -t build/api
+#  - vendor/bin/phploc --log-csv build/logs/phploc.csv --progress src
+#  - vendor/bin/phpcb --log build/logs/ --source src --output build/code-browser
 
 after_script:
   - vendor/bin/coveralls -v
