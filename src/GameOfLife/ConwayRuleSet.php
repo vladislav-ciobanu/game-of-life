@@ -11,11 +11,11 @@ class ConwayRuleSet implements RuleSet
 {
     /**
      * @param int $cellState
-     * @param int $numberOfLivingNeighbours
+     * @param int $nbOfLivingNeighbours
      * @return int
      */
-    public function apply($cellState, $numberOfLivingNeighbours)
+    public function apply($cellState, $nbOfLivingNeighbours)
     {
-        return (int)(($cellState | $numberOfLivingNeighbours) == 3);
+        return (int)(($cellState | $nbOfLivingNeighbours) == 3);
     }
 } 

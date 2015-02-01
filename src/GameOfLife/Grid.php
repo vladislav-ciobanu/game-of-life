@@ -166,12 +166,11 @@ class Grid
         $this->addRightColumn();
     }
 
-    
+
+
     /**
-     * 
-     * @param int $posY
+     * @param     $posY
      * @param int $cellState
-     * @return void
      */
     public function addRow($posY, $cellState = CellState::DEAD)
     {
@@ -189,12 +188,12 @@ class Grid
 
         $this->sortRowsByPosition();
     }
-    
+
+
 
     /**
-     * @param int $posX
+     * @param     $posX
      * @param int $cellState
-     * @return void
      */
     public function addColumn($posX, $cellState = CellState::DEAD)
     {

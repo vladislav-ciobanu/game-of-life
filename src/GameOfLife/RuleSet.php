@@ -11,8 +11,8 @@ interface RuleSet
 {
     /**
      * @param int $cellState
-     * @param int $numberOfLivingNeighbours
+     * @param int $nbOfLivingNeighbours
      * @return int
      */
-    public function apply($cellState, $numberOfLivingNeighbours);
+    public function apply($cellState, $nbOfLivingNeighbours);
 } 

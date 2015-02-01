@@ -37,18 +37,18 @@ class Life
     }
 
     /**
-     * @param null|int $maxNumberOfGenerations
+     * @param null|int $maxNbOfGenerations
      * @param null|int $maxRowLimit
      * @param null|int $maxColumnLimit
      */
-    public function play($maxNumberOfGenerations = null, $maxRowLimit = null, $maxColumnLimit = null)
+    public function play($maxNbOfGenerations = null, $maxRowLimit = null, $maxColumnLimit = null)
     {
         $currentGeneration = 1;
 
         $grid = $this->gridGenerator->generate($maxRowLimit, $maxColumnLimit);
         $this->gridPrinter->doPrint($grid);
 
-        while (null === $maxNumberOfGenerations || $currentGeneration++ <= $maxNumberOfGenerations) {
+        while (null === $maxNbOfGenerations || $currentGeneration++ <= $maxNbOfGenerations) {
             $newGrid = $this->replicator->replicate($grid);
             $this->gridPrinter->doPrint($newGrid);
             $grid = $newGrid;

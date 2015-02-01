@@ -52,7 +52,8 @@ class SimpleReplicator implements Replicator
             }
         }
 
-        $this->adjustGrid($newGrid);
+        $this->adjustGridTopBottomLines($newGrid);
+        $this->adjustGridLeftRightColumns($newGrid);
 
         return $newGrid;
     }
@@ -60,27 +61,15 @@ class SimpleReplicator implements Replicator
     /**
      * @param Grid $grid
      */
-    private function adjustGrid(Grid $grid)
+    private function adjustGridLeftRightColumns(Grid $grid)
     {
         $minPosX = $grid->getMinPositionX();
         $maxPosX = $grid->getMaxPositionX();
         $minPosY = $grid->getMinPositionY();
         $maxPosY = $grid->getMaxPositionY();
 
-        $removeTopLine     = true;
-        $removeBottomLine  = true;
         $removeLeftColumn  = true;
         $removeRightColumn = true;
-
-        for ($i = $minPosX; $i <= $maxPosX; $i++) {
-            if ($this->isCellAlive($grid, $i, $minPosY)) {
-                $removeTopLine = false;
-            }
-
-            if ($this->isCellAlive($grid, $i, $maxPosY)) {
-                $removeBottomLine = false;
-            }
-        }
 
         for ($i = $minPosY; $i <= $maxPosY; $i++) {
             if ($this->isCellAlive($grid, $minPosX, $i)) {
@@ -92,10 +81,35 @@ class SimpleReplicator implements Replicator
             }
         }
 
-        $removeTopLine && $grid->removeTopRow();
-        $removeBottomLine && $grid->removeBottomRow();
         $removeLeftColumn && $grid->removeLeftColumn();
         $removeRightColumn && $grid->removeRightColumn();
+    }
+
+    /**
+     * @param Grid $grid
+     */
+    private function adjustGridTopBottomLines(Grid $grid)
+    {
+        $minPosX = $grid->getMinPositionX();
+        $maxPosX = $grid->getMaxPositionX();
+        $minPosY = $grid->getMinPositionY();
+        $maxPosY = $grid->getMaxPositionY();
+
+        $removeTopLine     = true;
+        $removeBottomLine  = true;
+
+        for ($i = $minPosX; $i <= $maxPosX; $i++) {
+            if ($this->isCellAlive($grid, $i, $minPosY)) {
+                $removeTopLine = false;
+            }
+
+            if ($this->isCellAlive($grid, $i, $maxPosY)) {
+                $removeBottomLine = false;
+            }
+        }
+
+        $removeTopLine && $grid->removeTopRow();
+        $removeBottomLine && $grid->removeBottomRow();
     }
 
     /**

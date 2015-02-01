@@ -15,7 +15,7 @@ install: composer install --dev
 script:
   - mkdir -p build/logs
   - vendor/bin/phpunit --configuration phpunit.xml.dist
-  # - vendor/bin/phpmd src xml build/config/phpmd.xml --reportfile build/logs/pmd.xml
+  - vendor/bin/phpmd src xml build/config/phpmd.xml --reportfile build/logs/pmd.xml
   # - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=build/config/phpcs.xml src
   - vendor/bin/phpcpd src
   - vendor/bin/pdepend --summary-xml=build/logs/pdepend.xml src
