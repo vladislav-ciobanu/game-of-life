@@ -31,7 +31,7 @@ class ConwayRuleSetTest extends \PHPUnit_Framework_TestCase
      * @param int $cellState
      * @param int $numberOfNeighbours
      * @param int $expectedNewCellState
-     * 
+     *
      * @dataProvider dataProvider
      * @covers  \GameOfLife\ConwayRuleSet::apply
      */
@@ -65,7 +65,7 @@ class ConwayRuleSetTest extends \PHPUnit_Framework_TestCase
             array(CellState::DEAD, 5, CellState::DEAD),
             array(CellState::DEAD, 6, CellState::DEAD),
             array(CellState::DEAD, 7, CellState::DEAD),
-            array(CellState::DEAD, 8, CellState::DEAD),            
+            array(CellState::DEAD, 8, CellState::DEAD),
         );
     }
-} 
+}

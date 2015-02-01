@@ -69,4 +69,4 @@ class RandomGenerator implements GridGenerator
 
         return $grid;
     }
-} 
+}

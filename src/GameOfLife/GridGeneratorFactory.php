@@ -10,7 +10,7 @@ namespace GameOfLife;
 class GridGeneratorFactory
 {
     /**
-     * 
+     *
      * @param string $generatorName
      * @return GridGenerator
      * @throws \InvalidArgumentException
@@ -26,7 +26,7 @@ class GridGeneratorFactory
         if (!class_exists($generatorClass)) {
             throw new \InvalidArgumentException('Invalid generator ' . $generatorName);
         }
-        
-        return new $generatorClass();        
+
+        return new $generatorClass();
     }
-} 
+}

@@ -22,7 +22,7 @@ class Grid
     
     
     /**
-     * @var int 
+     * @var int
      */
     private $maxColumnLimit;
     
@@ -30,7 +30,7 @@ class Grid
     /**
      * @param null|int $maxRowLimit
      * @param null|int $maxColumnLimit
-     */    
+     */
     public function __construct($maxRowLimit = null, $maxColumnLimit = null)
     {
         $this->maxRowLimit    = $maxRowLimit;
@@ -170,7 +170,7 @@ class Grid
 
     /**
      * @param     $posY
-     * @param int $cellState
+     * @param int  $cellState
      */
     public function addRow($posY, $cellState = CellState::DEAD)
     {
@@ -193,7 +193,7 @@ class Grid
 
     /**
      * @param     $posX
-     * @param int $cellState
+     * @param int  $cellState
      */
     public function addColumn($posX, $cellState = CellState::DEAD)
     {

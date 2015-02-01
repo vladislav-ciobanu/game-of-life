@@ -17,7 +17,8 @@ script:
   - mkdir -p build/api
   - vendor/bin/phpunit --configuration phpunit.xml.dist
   - vendor/bin/phpmd src xml build/config/phpmd.xml --reportfile build/logs/pmd.xml
-  # - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=build/config/phpcs.xml src
+  - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle-src.xml --standard=build/config/phpcs.xml src
+  - vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle-test.xml --standard=build/config/phpcs.xml test
   - vendor/bin/phpcpd src
   - vendor/bin/pdepend --summary-xml=build/logs/pdepend.xml src
   - vendor/bin/phpdoc run -d src -t build/api

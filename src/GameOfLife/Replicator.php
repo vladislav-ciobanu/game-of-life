@@ -15,4 +15,4 @@ interface Replicator
      * @return Grid
      */
     public function replicate(Grid $grid);
-} 
+}

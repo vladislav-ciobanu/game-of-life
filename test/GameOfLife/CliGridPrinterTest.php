@@ -44,4 +44,3 @@ class CliGridPrinterTest extends \PHPUnit_Framework_TestCase
         $this->testSubject->doPrint($grid);
     }
 }
- 

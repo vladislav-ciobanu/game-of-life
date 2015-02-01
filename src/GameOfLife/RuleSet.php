@@ -15,4 +15,4 @@ interface RuleSet
      * @return int
      */
     public function apply($cellState, $nbOfLivingNeighbours);
-} 
+}

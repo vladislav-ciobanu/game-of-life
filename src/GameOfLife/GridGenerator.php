@@ -16,4 +16,4 @@ interface GridGenerator
      * @return Grid
      */
     public function generate($maxRowLimit = null, $maxColumnLimit = null);
-} 
+}

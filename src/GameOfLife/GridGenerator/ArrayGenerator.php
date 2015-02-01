@@ -45,4 +45,4 @@ class ArrayGenerator implements GridGenerator
 
         return $grid;
     }
-} 
+}

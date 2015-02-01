@@ -15,4 +15,4 @@ interface NeighboursCounter
      * @return int
      */
     public function countLiving(Grid $grid, Cell $cell);
-} 
+}

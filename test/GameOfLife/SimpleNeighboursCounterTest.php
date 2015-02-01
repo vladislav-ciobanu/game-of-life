@@ -55,5 +55,5 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
         
         $result = $this->testSubject->countLiving($grid, $cellToCheck);
         $this->assertEquals($result, 2);
-    }    
+    }
 }

@@ -14,4 +14,4 @@ interface GridPrinter
      * @param Grid $grid
      */
     public function doPrint(Grid $grid);
-} 
+}

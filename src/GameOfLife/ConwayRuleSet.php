@@ -18,4 +18,4 @@ class ConwayRuleSet implements RuleSet
     {
         return (int)(($cellState | $nbOfLivingNeighbours) == 3);
     }
-} 
+}

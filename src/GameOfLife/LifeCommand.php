@@ -22,33 +22,32 @@ class LifeCommand extends Command
             ->setName('play')
             ->setDescription('launches the game of life')
             ->addOption(
-               'maxNumberOfGenerations',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Maximum number of generations'
+                'maxNumberOfGenerations',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Maximum number of generations'
             )
             ->addOption(
-               'maxRowLimit',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Maximum number of grid rows',
-               40
+                'maxRowLimit',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Maximum number of grid rows',
+                40
             )
             ->addOption(
-               'maxColumnLimit',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Maximum number of grid columns',
-               40
+                'maxColumnLimit',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Maximum number of grid columns',
+                40
             )
             ->addOption(
-               'generator',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'The grid generator: ' . $this->getGridGeneratorNames(),
-               'Random'
-            )                
-        ;
+                'generator',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The grid generator: ' . $this->getGridGeneratorNames(),
+                'Random'
+            );
     }
 
     /**
@@ -66,13 +65,12 @@ class LifeCommand extends Command
 
         $life->play(
             $input->getOption('maxNumberOfGenerations'),
-            $input->getOption('maxRowLimit'),   
+            $input->getOption('maxRowLimit'),
             $input->getOption('maxColumnLimit')
         );
     }
     
     /**
-     * 
      * @param string $generator
      * @return GridGenerator
      */

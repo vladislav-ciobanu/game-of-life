@@ -43,7 +43,6 @@ class SimpleReplicator implements Replicator
         /* @var Cell[] $line */
         foreach ($clonedGrid->getCells() as $line) {
             foreach ($line as $cell) {
-
                 $nbLivingNeighbours = $this->neighboursCounter->countLiving($clonedGrid, $cell);
                 $newCellState       = $this->ruleSet->apply($cell->getState(), $nbLivingNeighbours);
 
@@ -122,4 +121,4 @@ class SimpleReplicator implements Replicator
     {
         return $grid->hasCell($posX, $posY) && $grid->getCell($posX, $posY)->isAlive();
     }
-} 
+}

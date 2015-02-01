@@ -31,4 +31,4 @@ class SimpleNeighboursCounter implements NeighboursCounter
 
         return $nbLives;
     }
-} 
+}
