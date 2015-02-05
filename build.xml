@@ -14,7 +14,7 @@
     <property name="coverage.dir" value="${base.dir}/build/coverage/"/>
 
 
-    <target name="build" depends="clean,phpunit,pdepend,phpmd,phpcpd,phploc,phpcs,phpdoc,phpcb">
+    <target name="build" depends="clean,phpunit,pdepend,phpmd,phpcpd,phploc,phpcs,phpcs-test,phpdoc,phpcb">
         <echo msg="Building done" />
     </target>
 
@@ -73,6 +73,11 @@
     <target name="phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
         <exec logoutput="true" checkreturn="true" passthru="true"
               command="${vendor.bin}phpcs --report=checkstyle --report-file=${logs.dir}checkstyle.xml --standard=${build.dir}/config/phpcs.xml ${src.dir}" />
+    </target>
+
+    <target name="phpcs-test" description="Generate checkstyle.xml using PHP_CodeSniffer">
+        <exec logoutput="true" checkreturn="true" passthru="true"
+              command="${vendor.bin}phpcs --report=checkstyle --report-file=${logs.dir}checkstyle-test.xml --standard=${build.dir}/config/phpcs.xml ${test.dir}" />
     </target>
 
     <target name="phpdoc" description="Generate API documentation using APIGen">
