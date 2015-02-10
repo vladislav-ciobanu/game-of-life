@@ -13,19 +13,16 @@ class Grid
      * @var Cell[][]
      */
     private $cells = array();
-    
-    
+
     /**
      * @var int
      */
     private $maxRowLimit;
-    
-    
+
     /**
      * @var int
      */
     private $maxColumnLimit;
-    
 
     /**
      * @param null|int $maxRowLimit
@@ -36,8 +33,7 @@ class Grid
         $this->maxRowLimit    = $maxRowLimit;
         $this->maxColumnLimit = $maxColumnLimit;
     }
-    
-    
+
     /**
      * @return int
      */
@@ -46,7 +42,6 @@ class Grid
         return $this->maxRowLimit;
     }
 
-        
     /**
      * @return int
      */
@@ -55,7 +50,6 @@ class Grid
         return $this->maxColumnLimit;
     }
 
-    
     /**
      * @param Cell $cell
      */
@@ -64,7 +58,6 @@ class Grid
         $this->cells[$cell->getPositionY()][$cell->getPositionX()] = $cell;
     }
 
-    
     /**
      * @param $positionX
      * @param $positionY
@@ -75,7 +68,25 @@ class Grid
         return isset($this->cells[$positionY][$positionX]);
     }
 
-    
+    /**
+     * @param $positionX
+     * @param $positionY
+     */
+    public function removeCell($positionX, $positionY)
+    {
+        if (!$this->hasCell($positionX, $positionY)) {
+            throw new \InvalidArgumentException(
+                sprintf('Unknown grid cell at position [%s %s]', $positionX, $positionY)
+            );
+        }
+
+        unset($this->cells[$positionY][$positionX]);
+
+        if (empty($this->cells[$positionY])) {
+            unset($this->cells[$positionY]);
+        }
+    }
+
     /**
      * @param $positionX
      * @param $positionY
@@ -85,7 +96,6 @@ class Grid
     {
         return $this->cells[$positionY][$positionX];
     }
-    
 
     /**
      * @return Cell[][]
@@ -94,173 +104,45 @@ class Grid
     {
         return $this->cells;
     }
-    
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getMinPositionX()
     {
-        return key(reset($this->cells));
+        return $this->getNumberOfRows() ? key(reset($this->cells)) : null;
     }
 
-    
     /**
-     * @return int
+     * @return int|null
      */
     public function getMaxPositionX()
     {
-        return $this->getMinPositionX() + $this->getNumberOfColumns() - 1;
+        return $this->getNumberOfRows() ? $this->getMinPositionX() + $this->getNumberOfColumns() - 1 : null;
     }
 
-    
     /**
-     * @return int
+     * @return int|null
      */
     public function getMinPositionY()
     {
+        if (!$this->getNumberOfRows()) {
+            return null;
+        }
+
         reset($this->cells);
 
         return key($this->cells);
     }
 
-    
     /**
-     * @return int
+     * @return int|null
      */
     public function getMaxPositionY()
     {
-        return $this->getMinPositionY() + $this->getNumberOfRows() - 1;
+        return $this->getNumberOfRows() ? $this->getMinPositionY() + $this->getNumberOfRows() - 1 : null;
     }
 
-    
-    public function addTopRow()
-    {
-        $this->addRow($this->getMinPositionY() - 1);
-    }
-
-    
-    public function addBottomRow()
-    {
-        $this->addRow($this->getMaxPositionY() + 1);
-    }
-    
-
-    public function addLeftColumn()
-    {
-        $this->addColumn($this->getMinPositionX() - 1);
-    }
-    
-
-    public function addRightColumn()
-    {
-        $this->addColumn($this->getMaxPositionX() + 1);
-    }
-    
-
-    public function addBorder()
-    {
-        $this->addTopRow();
-        $this->addBottomRow();
-        $this->addLeftColumn();
-        $this->addRightColumn();
-    }
-
-
-
-    /**
-     * @param     $posY
-     * @param int  $cellState
-     */
-    public function addRow($posY, $cellState = CellState::DEAD)
-    {
-        if (null !== $this->maxRowLimit && $this->getNumberOfRows() >= $this->maxRowLimit) {
-            return;
-        }
-        
-        $minPosX = $this->getMinPositionX();
-        $maxPosX = $this->getMaxPositionX();
-
-        for ($i = $minPosX; $i <= $maxPosX; $i++) {
-            $cell = new Cell($cellState, $i, $posY);
-            $this->setCell($cell);
-        }
-
-        $this->sortRowsByPosition();
-    }
-
-
-
-    /**
-     * @param     $posX
-     * @param int  $cellState
-     */
-    public function addColumn($posX, $cellState = CellState::DEAD)
-    {
-        if (null !== $this->maxColumnLimit && $this->getNumberOfColumns() >= $this->maxColumnLimit) {
-            return;
-        }
-        
-        $minPosY = $this->getMinPositionY();
-        $maxPosY = $this->getMaxPositionY();
-
-        for ($i = $minPosY; $i <= $maxPosY; $i++) {
-            $cell = new Cell($cellState, $posX, $i);
-            $this->setCell($cell);
-        }
-
-        $this->sortColumnsByPosition();
-    }
-
-
-    public function removeTopRow()
-    {
-        $this->removeRow($this->getMinPositionY());
-    }
-
-    
-    public function removeBottomRow()
-    {
-        $this->removeRow($this->getMaxPositionY());
-    }
-
-    
-    public function removeLeftColumn()
-    {
-        $this->removeColumn($this->getMinPositionX());
-    }
-
-    
-    public function removeRightColumn()
-    {
-        $this->removeColumn($this->getMaxPositionX());
-    }
-
-    
-    /**
-     * @param int $posY
-     */
-    public function removeRow($posY)
-    {
-        if (isset($this->cells[$posY])) {
-            unset($this->cells[$posY]);
-        }
-    }
-
-    
-    /**
-     * @param int $posX
-     */
-    public function removeColumn($posX)
-    {
-        foreach ($this->cells as &$row) {
-            if (isset($row[$posX])) {
-                unset($row[$posX]);
-            }
-        }
-    }
-    
-    
     /**
      * @return int
      */
@@ -269,7 +151,6 @@ class Grid
         return count($this->cells);
     }
 
-
     /**
      * @return int
      */
@@ -277,15 +158,13 @@ class Grid
     {
         return count(reset($this->cells));
     }
-    
-    
-    private function sortRowsByPosition()
+
+    public function sortRowsByPosition()
     {
         ksort($this->cells);
     }
 
-    
-    private function sortColumnsByPosition()
+    public function sortColumnsByPosition()
     {
         foreach ($this->cells as &$row) {
             ksort($row);

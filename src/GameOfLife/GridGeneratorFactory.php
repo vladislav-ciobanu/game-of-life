@@ -15,7 +15,7 @@ class GridGeneratorFactory
      * @return GridGenerator
      * @throws \InvalidArgumentException
      */
-    public static function getGridGeneratorInstance($generatorName)
+    public function getGridGeneratorInstance($generatorName)
     {
         if (empty($generatorName)) {
             throw new \InvalidArgumentException('No generator specified');

@@ -20,13 +20,20 @@ class SimpleReplicator implements Replicator
     private $neighboursCounter;
 
     /**
+     * @var GridManager
+     */
+    private $gridManager;
+
+    /**
      * @param RuleSet           $ruleSet
      * @param NeighboursCounter $neighboursCounter
+     * @param GridManager       $gridManager
      */
-    public function __construct(RuleSet $ruleSet, NeighboursCounter $neighboursCounter)
+    public function __construct(RuleSet $ruleSet, NeighboursCounter $neighboursCounter, GridManager $gridManager)
     {
         $this->ruleSet           = $ruleSet;
         $this->neighboursCounter = $neighboursCounter;
+        $this->gridManager       = $gridManager;
     }
 
     /**
@@ -36,7 +43,7 @@ class SimpleReplicator implements Replicator
     public function replicate(Grid $grid)
     {
         $clonedGrid = clone $grid;
-        $clonedGrid->addBorder();
+        $this->gridManager->addBorder($clonedGrid);
 
         $newGrid = new Grid($clonedGrid->getMaxRowLimit(), $clonedGrid->getMaxColumnLimit());
 
@@ -80,8 +87,8 @@ class SimpleReplicator implements Replicator
             }
         }
 
-        $removeLeftColumn && $grid->removeLeftColumn();
-        $removeRightColumn && $grid->removeRightColumn();
+        $removeLeftColumn && $this->gridManager->removeLeftColumn($grid);
+        $removeRightColumn && $this->gridManager->removeRightColumn($grid);
     }
 
     /**
@@ -107,8 +114,8 @@ class SimpleReplicator implements Replicator
             }
         }
 
-        $removeTopLine && $grid->removeTopRow();
-        $removeBottomLine && $grid->removeBottomRow();
+        $removeTopLine && $this->gridManager->removeTopRow($grid);
+        $removeBottomLine && $this->gridManager->removeBottomRow($grid);
     }
 
     /**

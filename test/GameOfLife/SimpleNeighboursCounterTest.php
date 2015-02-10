@@ -33,7 +33,7 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
      */
     public function testCountLivingWhenGridEmptyReturnsZeroNeighbours()
     {
-        $result = $this->testSubject->countLiving(new Grid(), new Cell(0, 0, 0));
+        $result = $this->testSubject->countLiving(new Grid(), new Cell(CellState::DEAD, 0, 0));
         $this->assertEmpty($result);
     }
 
@@ -42,14 +42,16 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
      * @covers  \GameOfLife\SimpleNeighboursCounter::countLiving
      * @uses    \GameOfLife\Cell
      * @uses    \GameOfLife\Grid
+     * @uses    \GameOfLife\GridManager
      */
     public function testCountLivingReturnExpectedNumberOfNeighbours()
     {
         $cellToCheck = new Cell(CellState::DEAD, 0, 0);
+        $gridManager = new GridManager();
         $grid = new Grid();
         $grid->setCell($cellToCheck);
-        $grid->addBottomRow();
-        $grid->addRightColumn();
+        $gridManager->addBottomRow($grid);
+        $gridManager->addRightColumn($grid);
         $grid->setCell(new Cell(CellState::ALIVE, 1, 1));
         $grid->setCell(new Cell(CellState::ALIVE, 0, 1));
         

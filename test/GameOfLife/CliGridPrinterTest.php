@@ -25,6 +25,20 @@ class CliGridPrinterTest extends \PHPUnit_Framework_TestCase
         $this->testSubject = new CliGridPrinter($this->outputMock);
     }
 
+    public function testClassImplementsExpectedInterface()
+    {
+        $this->assertInstanceOf('GameOfLife\GridPrinter', $this->testSubject);
+    }
+
+    /**
+     * @covers  \GameOfLife\CliGridPrinter::__construct
+     */
+    public function testConstructorWorks()
+    {
+        $this->assertAttributeSame($this->outputMock, "output", $this->testSubject);
+        $this->assertAttributeSame(100000, "displayDelay", $this->testSubject);
+    }
+
     /**
      * @covers  \GameOfLife\CliGridPrinter::doPrint
      * @uses    \GameOfLife\Cell

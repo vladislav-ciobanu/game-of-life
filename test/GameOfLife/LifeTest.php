@@ -46,6 +46,17 @@ class LifeTest extends \PHPUnit_Framework_TestCase
         $this->testSubject = new Life($this->gridGeneratorMock, $this->replicatorMock, $this->gridPrinterMock);
     }
 
+    /**
+     * @covers  \GameOfLife\Life::__construct
+     * @uses \GameOfLife\Grid
+     */
+    public function testConstructorWorks()
+    {
+        $this->assertAttributeSame($this->gridGeneratorMock, "gridGenerator", $this->testSubject);
+        $this->assertAttributeSame($this->replicatorMock, "replicator", $this->testSubject);
+        $this->assertAttributeSame($this->gridPrinterMock, "gridPrinter", $this->testSubject);
+    }
+
 
     /**
      * @covers \GameOfLife\Life::play
