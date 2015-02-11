@@ -11,6 +11,8 @@ use \Symfony\Component\Console\Output\OutputInterface;
  */
 class CliGridPrinter implements GridPrinter
 {
+    const CELL_SEPARATOR = ' ';
+
     /**
      * @var array
      */
@@ -44,22 +46,33 @@ class CliGridPrinter implements GridPrinter
      */
     public function doPrint(Grid $grid)
     {
-        $output = PHP_EOL;
+        $output = array(PHP_EOL);
 
-        /* @var Cell[] $line */
-        foreach ($grid->getCells() as $line) {
-            foreach ($line as $cell) {
-                $output .= self::$cellStateCharMap[$cell->getState()] . ' ';
-            }
-            $output .= PHP_EOL;
-        }
 
-        $output .= PHP_EOL;
+        $grid->forEachCell($this->printCell($output), function () use (&$output) {
+            $output[] = PHP_EOL;
+        });
 
-        $this->output->write($output);
+        $output[] = PHP_EOL;
+
+        $this->output->write(implode('', $output));
 
         if ($this->displayDelay > 0) {
             usleep($this->displayDelay);
         }
+    }
+
+    /**
+     * @param array $output
+     * @return \Closure
+     */
+    private function printCell(array &$output)
+    {
+        $cellStateCharMap = self::$cellStateCharMap;
+        $cellSeparator = self::CELL_SEPARATOR;
+
+        return function(Cell $cell) use (&$output, $cellStateCharMap, $cellSeparator) {
+            array_push($output, $cellStateCharMap[$cell->getState()], $cellSeparator);
+        };
     }
 }

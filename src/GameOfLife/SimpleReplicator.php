@@ -47,21 +47,31 @@ class SimpleReplicator implements Replicator
 
         $newGrid = new Grid($clonedGrid->getMaxRowLimit(), $clonedGrid->getMaxColumnLimit());
 
-        /* @var Cell[] $line */
-        foreach ($clonedGrid->getCells() as $line) {
-            foreach ($line as $cell) {
-                $nbLivingNeighbours = $this->neighboursCounter->countLiving($clonedGrid, $cell);
-                $newCellState       = $this->ruleSet->apply($cell->getState(), $nbLivingNeighbours);
-
-                $cell = new Cell($newCellState, $cell->getPositionX(), $cell->getPositionY());
-                $newGrid->setCell($cell);
-            }
-        }
+        $clonedGrid->forEachCell($this->processCell($clonedGrid, $newGrid));
 
         $this->adjustGridTopBottomLines($newGrid);
         $this->adjustGridLeftRightColumns($newGrid);
 
         return $newGrid;
+    }
+
+    /**
+     * @param Grid $clonedGrid
+     * @param Grid $newGrid
+     * @return \Closure
+     */
+    private function processCell(Grid $clonedGrid, Grid $newGrid)
+    {
+        $neighboursCounter = $this->neighboursCounter;
+        $ruleSet = $this->ruleSet;
+
+        return function(Cell $cell) use ($neighboursCounter, $ruleSet, $clonedGrid, $newGrid) {
+            $nbLivingNeighbours = $neighboursCounter->countLiving($clonedGrid, $cell);
+            $newCellState       = $ruleSet->apply($cell->getState(), $nbLivingNeighbours);
+
+            $cell = new Cell($newCellState, $cell->getPositionX(), $cell->getPositionY());
+            $newGrid->setCell($cell);
+        };
     }
 
     /**

@@ -98,14 +98,6 @@ class Grid
     }
 
     /**
-     * @return Cell[][]
-     */
-    public function getCells()
-    {
-        return $this->cells;
-    }
-
-    /**
      * @return int|null
      */
     public function getMinPositionX()
@@ -168,6 +160,28 @@ class Grid
     {
         foreach ($this->cells as &$row) {
             ksort($row);
+        }
+    }
+
+    /**
+     * @param \Closure $cellClosure
+     * @param \Closure $lineClosure
+     */
+    public function forEachCell(\Closure $cellClosure, \Closure $lineClosure = null)
+    {
+        if (null === $lineClosure) {
+            $lineClosure = function() {
+
+            };
+        }
+
+        /* @var Cell[] $line */
+        foreach ($this->cells as $line) {
+            foreach ($line as $cell) {
+                $cellClosure($cell);
+            }
+
+            $lineClosure();
         }
     }
 }

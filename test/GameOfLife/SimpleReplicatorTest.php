@@ -84,11 +84,10 @@ class SimpleReplicatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $replicatedGrid->getNumberOfRows());
         $this->assertEquals(1, $replicatedGrid->getNumberOfColumns());
 
-        /* @var Cell[] $line */
-        foreach ($replicatedGrid->getCells() as $line) {
-            foreach ($line as $cell) {
-                $this->assertTrue($cell->isAlive());
-            }
-        }
+        $that = $this;
+
+        $replicatedGrid->forEachCell(function (Cell $cell) use ($that) {
+            $that->assertTrue($cell->isAlive());
+        });
     }
 }
