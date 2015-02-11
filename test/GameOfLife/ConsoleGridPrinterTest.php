@@ -2,15 +2,15 @@
 namespace GameOfLife;
 
 /**
- * Class CliGridPrinterTest
+ * Class ConsoleGridPrinterTest
  *
  * @package GameOfLife
- * @covers  \GameOfLife\CliGridPrinter
+ * @covers  \GameOfLife\ConsoleGridPrinter
  */
-class CliGridPrinterTest extends \PHPUnit_Framework_TestCase
+class ConsoleGridPrinterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var CliGridPrinter
+     * @var ConsoleGridPrinter
      */
     private $testSubject;
 
@@ -22,7 +22,7 @@ class CliGridPrinterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->outputMock = $this->getMock('\Symfony\Component\Console\Output\OutputInterface');
-        $this->testSubject = new CliGridPrinter($this->outputMock);
+        $this->testSubject = new ConsoleGridPrinter($this->outputMock);
     }
 
     public function testClassImplementsExpectedInterface()
@@ -31,7 +31,7 @@ class CliGridPrinterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\CliGridPrinter::__construct
+     * @covers  \GameOfLife\ConsoleGridPrinter::__construct
      */
     public function testConstructorWorks()
     {
@@ -40,7 +40,7 @@ class CliGridPrinterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\CliGridPrinter::doPrint
+     * @covers  \GameOfLife\ConsoleGridPrinter::doPrint
      * @uses    \GameOfLife\Cell
      * @uses    \GameOfLife\Grid
      */

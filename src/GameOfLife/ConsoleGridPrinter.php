@@ -5,11 +5,11 @@ namespace GameOfLife;
 use \Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class CliGridPrinter
+ * Class ConsoleGridPrinter
  *
  * @package GameOfLife
  */
-class CliGridPrinter implements GridPrinter
+class ConsoleGridPrinter implements GridPrinter
 {
     const CELL_SEPARATOR = ' ';
 
@@ -49,7 +49,7 @@ class CliGridPrinter implements GridPrinter
         $output = array(PHP_EOL);
 
 
-        $grid->forEachCell($this->printCell($output), function () use (&$output) {
+        $grid->forEachCell($this->processCell($output), function () use (&$output) {
             $output[] = PHP_EOL;
         });
 
@@ -66,7 +66,7 @@ class CliGridPrinter implements GridPrinter
      * @param array $output
      * @return \Closure
      */
-    private function printCell(array &$output)
+    private function processCell(array &$output)
     {
         $cellStateCharMap = self::$cellStateCharMap;
         $cellSeparator = self::CELL_SEPARATOR;

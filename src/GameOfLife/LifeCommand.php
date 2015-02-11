@@ -93,7 +93,7 @@ class LifeCommand extends Command
         $life = new Life(
             $this->getGridGenerator($input->getOption(self::OPTION_GENERATOR)),
             $this->replicator,
-            new CliGridPrinter($output)
+            new ConsoleGridPrinter($output)
         );
 
         $life->play(
