@@ -2,7 +2,10 @@
 
 namespace GameOfLife;
 
-use GameOfLife\GridGenerator\RandomGenerator;
+use GameOfLife\Grid\ConsoleGridPrinter;
+use GameOfLife\Grid\Generator\PatternGridGenerator;
+use GameOfLife\Grid\Generator\RandomGridGenerator;
+use GameOfLife\Util\GamePatternsLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,12 +23,12 @@ class LifeCommand extends Command
 
     const OPTION_MAX_COLUMN_LIMIT = 'maxColumnLimit';
     const OPTION_MAX_ROW_LIMIT = 'maxRowLimit';
-    const OPTION_GENERATOR = 'generator';
+    const OPTION_PATTERN = 'pattern';
     const OPTION_MAX_NUMBER_OF_GENERATIONS = 'maxNumberOfGenerations';
 
     const DEFAULT_MAX_COLUMN_LIMIT = 40;
     const DEFAULT_MAX_ROW_LIMIT = 40;
-    const DEFAULT_GENERATOR = 'Random';
+    const DEFAULT_PATTERN = 'random';
 
     /**
      * @var Replicator
@@ -33,20 +36,38 @@ class LifeCommand extends Command
     private $replicator;
 
     /**
-     * @var GridGeneratorFactory
+     * @var PatternGridGenerator
      */
-    private $gridGeneratorFactory;
+    private $patternGridGenerator;
+
+    /**
+     * @var RandomGridGenerator
+     */
+    private $randomGridGenerator;
+
+    /**
+     * @var GamePatternsLoader
+     */
+    private $gamePatternsLoader;
 
 
     /**
      * @param Replicator           $replicator
-     * @param GridGeneratorFactory $gridGeneratorFactory
+     * @param PatternGridGenerator $patternGridGenerator
+     * @param RandomGridGenerator  $randomGridGenerator
+     * @param GamePatternsLoader   $gamePatternsLoader
      */
-    public function __construct(Replicator $replicator, GridGeneratorFactory $gridGeneratorFactory)
-    {
-        parent::__construct();
+    public function __construct(
+        Replicator $replicator,
+        PatternGridGenerator $patternGridGenerator,
+        RandomGridGenerator $randomGridGenerator,
+        GamePatternsLoader $gamePatternsLoader
+    ) {
         $this->replicator = $replicator;
-        $this->gridGeneratorFactory = $gridGeneratorFactory;
+        $this->patternGridGenerator = $patternGridGenerator;
+        $this->randomGridGenerator= $randomGridGenerator;
+        $this->gamePatternsLoader = $gamePatternsLoader;
+        parent::__construct();
     }
 
     protected function configure()
@@ -75,11 +96,11 @@ class LifeCommand extends Command
                 self::DEFAULT_MAX_COLUMN_LIMIT
             )
             ->addOption(
-                self::OPTION_GENERATOR,
+                self::OPTION_PATTERN,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'The grid generator: ' . $this->getGridGeneratorNames(),
-                self::DEFAULT_GENERATOR
+                'The game pattern: ' . $this->getGamePatterns(),
+                self::DEFAULT_PATTERN
             );
     }
 
@@ -90,37 +111,38 @@ class LifeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $grid = $this->generateGrid(
+            $input->getOption(self::OPTION_PATTERN),
+            $input->getOption(self::OPTION_MAX_ROW_LIMIT),
+            $input->getOption(self::OPTION_MAX_COLUMN_LIMIT)
+        );
+
         $life = new Life(
-            $this->getGridGenerator($input->getOption(self::OPTION_GENERATOR)),
             $this->replicator,
             new ConsoleGridPrinter($output)
         );
 
-        $life->play(
-            $input->getOption(self::OPTION_MAX_NUMBER_OF_GENERATIONS),
-            $input->getOption(self::OPTION_MAX_ROW_LIMIT),
-            $input->getOption(self::OPTION_MAX_COLUMN_LIMIT)
-        );
+        $life->play($grid, $input->getOption(self::OPTION_MAX_NUMBER_OF_GENERATIONS));
     }
-    
-    /**
-     * @param string $generator
-     * @return GridGenerator
-     */
-    private function getGridGenerator($generator)
-    {
-        if (empty($generator)) {
-            $generator = self::DEFAULT_GENERATOR;
-        }
 
-        return $this->gridGeneratorFactory->getGridGeneratorInstance($generator);
+    /**
+     * @param $pattern
+     * @param $maxRowLimit
+     * @param $maxColumnLimit
+     * @return Grid\Grid
+     */
+    private function generateGrid($pattern, $maxRowLimit, $maxColumnLimit)
+    {
+        return empty($pattern) || strtolower($pattern) === self::DEFAULT_PATTERN
+                ? $this->randomGridGenerator->generate(null, $maxRowLimit, $maxColumnLimit)
+                : $this->patternGridGenerator->generate($pattern, $maxRowLimit, $maxColumnLimit);
     }
 
     /**
      * @return string
      */
-    private function getGridGeneratorNames()
+    private function getGamePatterns()
     {
-        return implode(self::LIST_SEP, GridGeneratorName::getGridGeneratorNameList());
+        return implode(self::LIST_SEP, $this->gamePatternsLoader->getPatternNames());
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace GameOfLife;
+namespace GameOfLife\Grid;
 
 /**
  * Interface GridPrinter
  *
- * @package GameOfLife
+ * @package GameOfLife\Grid
  */
 interface GridPrinter
 {

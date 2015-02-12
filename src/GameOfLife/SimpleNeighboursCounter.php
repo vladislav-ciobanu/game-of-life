@@ -2,6 +2,9 @@
 
 namespace GameOfLife;
 
+use GameOfLife\Grid\Cell;
+use GameOfLife\Grid\Grid;
+
 /**
  * Class SimpleNeighboursCounter
  *

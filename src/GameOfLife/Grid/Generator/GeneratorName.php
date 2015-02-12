@@ -1,13 +1,13 @@
 <?php
 
-namespace GameOfLife;
+namespace GameOfLife\Grid\Generator;
 
 /**
- * Class GridGeneratorName
+ * Class GeneratorName
  *
- * @package GameOfLife
+ * @package GameOfLife\Grid\Generator
  */
-class GridGeneratorName
+class GeneratorName
 {
     const ACORN = 'Acorn';
     const BEACON = 'Beacon';

@@ -1,11 +1,11 @@
 <?php
 
-namespace GameOfLife;
+namespace GameOfLife\Grid;
 
 /**
  * Class Grid
  *
- * @package GameOfLife
+ * @package GameOfLife\Grid
  */
 class Grid
 {

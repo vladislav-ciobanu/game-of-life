@@ -1,18 +1,17 @@
 <?php
 
-namespace GameOfLife\GridGenerator;
+namespace GameOfLife\Grid\Generator;
 
-use GameOfLife\Cell;
-use GameOfLife\CellState;
-use GameOfLife\Grid;
-use GameOfLife\GridGenerator;
+use GameOfLife\Grid\Cell;
+use GameOfLife\Grid\CellState;
+use GameOfLife\Grid\Grid;
 
 /**
- * Class RandomGenerator
+ * Class RandomGridGenerator
  *
- * @package GameOfLife\GridGenerator
+ * @package GameOfLife\Grid\Generator
  */
-class RandomGenerator implements GridGenerator
+class RandomGridGenerator implements GridGenerator
 {
     /**
      * @var int
@@ -49,11 +48,9 @@ class RandomGenerator implements GridGenerator
     }
 
     /**
-     * @param null|int $maxRowLimit
-     * @param null|int $maxColumnLimit
-     * @return Grid
+     * @inheritdoc
      */
-    public function generate($maxRowLimit = null, $maxColumnLimit = null)
+    public function generate($sourceData = null, $maxRowLimit = null, $maxColumnLimit = null)
     {
         $numberOfRows    = mt_rand($this->minRows, $this->maxRows);
         $numberOfColumns = mt_rand($this->minCols, $this->maxCols);

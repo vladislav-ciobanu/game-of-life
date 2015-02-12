@@ -2,6 +2,10 @@
 
 namespace GameOfLife;
 
+use GameOfLife\Grid\Cell;
+use GameOfLife\Grid\Grid;
+use GameOfLife\Grid\GridManager;
+
 /**
  * Class SimpleReplicator
  *

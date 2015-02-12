@@ -1,6 +1,9 @@
 <?php
 namespace GameOfLife;
 
+use GameOfLife\Grid\Grid;
+use GameOfLife\Grid\GridPrinter;
+
 /**
  * Class LifeTest
  *
@@ -14,11 +17,6 @@ class LifeTest extends \PHPUnit_Framework_TestCase
      * @var Life
      */
     private $testSubject;
-
-    /**
-     * @var GridGenerator|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $gridGeneratorMock;
 
     /**
      * @var Replicator|\PHPUnit_Framework_MockObject_MockObject
@@ -38,21 +36,19 @@ class LifeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->gridGeneratorMock = $this->getMock('\GameOfLife\GridGenerator');
         $this->replicatorMock = $this->getMock('\GameOfLife\Replicator');
-        $this->gridPrinterMock = $this->getMock('\GameOfLife\GridPrinter');
-        $this->gridMock = $this->getMock('\GameOfLife\Grid');
+        $this->gridPrinterMock = $this->getMock('\GameOfLife\Grid\GridPrinter');
+        $this->gridMock = $this->getMock('\GameOfLife\Grid\Grid');
 
-        $this->testSubject = new Life($this->gridGeneratorMock, $this->replicatorMock, $this->gridPrinterMock);
+        $this->testSubject = new Life($this->replicatorMock, $this->gridPrinterMock);
     }
 
     /**
      * @covers  \GameOfLife\Life::__construct
-     * @uses \GameOfLife\Grid
+     * @uses \GameOfLife\Grid\Grid
      */
     public function testConstructorWorks()
     {
-        $this->assertAttributeSame($this->gridGeneratorMock, "gridGenerator", $this->testSubject);
         $this->assertAttributeSame($this->replicatorMock, "replicator", $this->testSubject);
         $this->assertAttributeSame($this->gridPrinterMock, "gridPrinter", $this->testSubject);
     }
@@ -60,52 +56,33 @@ class LifeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \GameOfLife\Life::play
-     * @uses \GameOfLife\Grid
+     * @uses \GameOfLife\Grid\Grid
      */
     public function testPlayWhenMaxNbOfGenerationsIsZeroThenDoNotReplicate()
     {
-        $maxRowLimit = 2;
-        $maxColumnLimit = 2;
-
-        $this->expectGridGenerator($maxRowLimit, $maxColumnLimit);
         $this->expectGridPrinter(0, $this->gridMock);
         $this->replicatorMock->expects($this->never())->method('replicate');
 
-        $this->testSubject->play(0, $maxRowLimit, $maxColumnLimit);
+        $this->testSubject->play($this->gridMock, 0);
     }
 
 
     /**
      * @covers \GameOfLife\Life::play
-     * @uses \GameOfLife\Grid
+     * @uses \GameOfLife\Grid\Grid
      */
     public function testPlayWhenMaxNbOfGenerationsGreaterThanZeroThenReplicate()
     {
-        $maxRowLimit = 2;
-        $maxColumnLimit = 2;
-        $replicatedGrid1 = $this->getMock('\GameOfLife\Grid');
-        $replicatedGrid2 = $this->getMock('\GameOfLife\Grid');
+        $replicatedGrid1 = $this->getMock('\GameOfLife\Grid\Grid');
+        $replicatedGrid2 = $this->getMock('\GameOfLife\Grid\Grid');
 
-        $this->expectGridGenerator($maxRowLimit, $maxColumnLimit);
         $this->expectGridPrinter(0, $this->gridMock);
         $this->expectReplicator(0, $replicatedGrid1);
         $this->expectGridPrinter(1, $replicatedGrid1);
         $this->expectReplicator(1, $replicatedGrid2);
         $this->expectGridPrinter(2, $replicatedGrid2);
 
-        $this->testSubject->play(2, $maxRowLimit, $maxColumnLimit);
-    }
-
-
-    /**
-     * @param int $maxRowLimit
-     * @param int $maxColumnLimit
-     */
-    private function expectGridGenerator($maxRowLimit, $maxColumnLimit)
-    {
-        $this->gridGeneratorMock->expects($this->once())->method('generate')
-                ->with($maxRowLimit, $maxColumnLimit)
-                ->will($this->returnValue($this->gridMock));
+        $this->testSubject->play($this->gridMock, 2);
     }
 
 

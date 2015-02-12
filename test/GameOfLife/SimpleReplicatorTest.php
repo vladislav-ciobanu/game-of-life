@@ -2,6 +2,11 @@
 
 namespace GameOfLife;
 
+use GameOfLife\Grid\Cell;
+use GameOfLife\Grid\CellState;
+use GameOfLife\Grid\Grid;
+use GameOfLife\Grid\GridManager;
+
 /**
  * Class SimpleReplicatorTest
  *
@@ -35,7 +40,7 @@ class SimpleReplicatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->ruleSetMock = $this->getMock('\GameOfLife\RuleSet');
         $this->neighboursCounterMock = $this->getMock('\GameOfLife\NeighboursCounter');
-        $this->gridManagerMock = $this->getMock('\GameOfLife\GridManager');
+        $this->gridManagerMock = $this->getMock('\GameOfLife\Grid\GridManager');
         $this->testSubject = new SimpleReplicator(
             $this->ruleSetMock,
             $this->neighboursCounterMock,
@@ -61,8 +66,8 @@ class SimpleReplicatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \GameOfLife\SimpleReplicator::replicate
-     * @uses \GameOfLife\Cell
-     * @uses \GameOfLife\Grid
+     * @uses \GameOfLife\Grid\Cell
+     * @uses \GameOfLife\Grid\Grid
      */
     public function testReplicateWorksAsExpected()
     {
@@ -70,7 +75,7 @@ class SimpleReplicatorTest extends \PHPUnit_Framework_TestCase
         $grid->setCell(new Cell(CellState::ALIVE, 0, 0));
 
         $this->neighboursCounterMock->expects($this->once())->method('countLiving')
-                ->with($this->isInstanceOf('\GameOfLife\Grid'), $this->isInstanceOf('\GameOfLife\Cell'))
+                ->with($this->isInstanceOf('\GameOfLife\Grid\Grid'), $this->isInstanceOf('\GameOfLife\Grid\Cell'))
                 ->will($this->returnValue(0));
 
         $this->ruleSetMock->expects($this->once())->method('apply')

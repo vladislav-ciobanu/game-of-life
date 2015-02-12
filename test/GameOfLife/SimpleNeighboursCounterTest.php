@@ -2,6 +2,11 @@
 
 namespace GameOfLife;
 
+use GameOfLife\Grid\Cell;
+use GameOfLife\Grid\CellState;
+use GameOfLife\Grid\Grid;
+use GameOfLife\Grid\GridManager;
+
 /**
  * Class SimpleNeighboursCounterTest
  *
@@ -14,8 +19,8 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
      * @var SimpleNeighboursCounter
      */
     private $testSubject;
-    
-    
+
+
     protected function setUp()
     {
         $this->testSubject = new SimpleNeighboursCounter();
@@ -28,8 +33,8 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \GameOfLife\SimpleNeighboursCounter::countLiving
-     * @uses    \GameOfLife\Cell
-     * @uses    \GameOfLife\Grid
+     * @uses    \GameOfLife\Grid\Cell
+     * @uses    \GameOfLife\Grid\Grid
      */
     public function testCountLivingWhenGridEmptyReturnsZeroNeighbours()
     {
@@ -40,9 +45,9 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \GameOfLife\SimpleNeighboursCounter::countLiving
-     * @uses    \GameOfLife\Cell
-     * @uses    \GameOfLife\Grid
-     * @uses    \GameOfLife\GridManager
+     * @uses    \GameOfLife\Grid\Cell
+     * @uses    \GameOfLife\Grid\Grid
+     * @uses    \GameOfLife\Grid\GridManager
      */
     public function testCountLivingReturnExpectedNumberOfNeighbours()
     {
@@ -54,7 +59,7 @@ class SimpleNeighboursCounterTest extends \PHPUnit_Framework_TestCase
         $gridManager->addRightColumn($grid);
         $grid->setCell(new Cell(CellState::ALIVE, 1, 1));
         $grid->setCell(new Cell(CellState::ALIVE, 0, 1));
-        
+
         $result = $this->testSubject->countLiving($grid, $cellToCheck);
         $this->assertEquals($result, 2);
     }

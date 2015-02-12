@@ -2,6 +2,8 @@
 
 namespace GameOfLife;
 
+use GameOfLife\Grid\CellState;
+
 /**
  * Class ConwayRuleSetTest
  *

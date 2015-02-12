@@ -1,11 +1,11 @@
 <?php
 
-namespace GameOfLife;
+namespace GameOfLife\Grid;
 
 /**
  * Class CellState
  *
- * @package GameOfLife
+ * @package GameOfLife\Grid
  */
 final class CellState
 {

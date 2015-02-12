@@ -1,13 +1,13 @@
 <?php
 
-namespace GameOfLife;
+namespace GameOfLife\Grid;
 
 use \Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ConsoleGridPrinter
  *
- * @package GameOfLife
+ * @package GameOfLife\Grid
  */
 class ConsoleGridPrinter implements GridPrinter
 {

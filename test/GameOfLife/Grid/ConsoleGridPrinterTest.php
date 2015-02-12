@@ -1,11 +1,11 @@
 <?php
-namespace GameOfLife;
+namespace GameOfLife\Grid;
 
 /**
  * Class ConsoleGridPrinterTest
  *
- * @package GameOfLife
- * @covers  \GameOfLife\ConsoleGridPrinter
+ * @package GameOfLife\Grid
+ * @covers  \GameOfLife\Grid\ConsoleGridPrinter
  */
 class ConsoleGridPrinterTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,11 +27,11 @@ class ConsoleGridPrinterTest extends \PHPUnit_Framework_TestCase
 
     public function testClassImplementsExpectedInterface()
     {
-        $this->assertInstanceOf('GameOfLife\GridPrinter', $this->testSubject);
+        $this->assertInstanceOf('GameOfLife\Grid\GridPrinter', $this->testSubject);
     }
 
     /**
-     * @covers  \GameOfLife\ConsoleGridPrinter::__construct
+     * @covers  \GameOfLife\Grid\ConsoleGridPrinter::__construct
      */
     public function testConstructorWorks()
     {
@@ -40,9 +40,9 @@ class ConsoleGridPrinterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\ConsoleGridPrinter::doPrint
-     * @uses    \GameOfLife\Cell
-     * @uses    \GameOfLife\Grid
+     * @covers  \GameOfLife\Grid\ConsoleGridPrinter::doPrint
+     * @uses    \GameOfLife\Grid\Cell
+     * @uses    \GameOfLife\Grid\Grid
      */
     public function testDoPrintWorksAsExpected()
     {

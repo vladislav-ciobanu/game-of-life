@@ -1,12 +1,12 @@
 <?php
 
-namespace GameOfLife;
+namespace GameOfLife\Grid;
 
 /**
  * Class CellTest
  *
- * @package GameOfLife
- * @covers  \GameOfLife\Cell
+ * @package GameOfLife\Grid
+ * @covers \GameOfLife\Grid\Cell
  */
 class CellTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,7 +41,7 @@ class CellTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\Cell::__construct
+     * @covers  \GameOfLife\Grid\Cell::__construct
      */
     public function testConstructorWorks()
     {
@@ -51,7 +51,7 @@ class CellTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\Cell::getState
+     * @covers  \GameOfLife\Grid\Cell::getState
      */
     public function testGetStateReturnsExpectedCellState()
     {
@@ -59,7 +59,7 @@ class CellTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\Cell::getPositionX
+     * @covers  \GameOfLife\Grid\Cell::getPositionX
      */
     public function testGetPositionXReturnsExpectedXPosition()
     {
@@ -67,7 +67,7 @@ class CellTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\Cell::getPositionY
+     * @covers  \GameOfLife\Grid\Cell::getPositionY
      */
     public function testGetPositionYReturnsExpectedYPosition()
     {
@@ -75,7 +75,7 @@ class CellTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \GameOfLife\Cell::isAlive
+     * @covers  \GameOfLife\Grid\Cell::isAlive
      */
     public function testIsAliveWorksAsExpected()
     {
