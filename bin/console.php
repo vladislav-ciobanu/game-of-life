@@ -12,9 +12,10 @@ use \GameOfLife\SimpleReplicator;
 use GameOfLife\Util\GamePatternsLoader;
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Finder\Finder;
 
 $application = new Application();
-$gamePatternsLoader = new GamePatternsLoader();
+$gamePatternsLoader = new GamePatternsLoader(new Finder());
 
 $application->add(
     new LifeCommand(

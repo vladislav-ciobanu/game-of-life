@@ -16,9 +16,23 @@ class GamePatternsLoader
     const GAME_PATTERNS_FILE_EXT = 'json';
 
     /**
+     * @var Finder
+     */
+    private $finder;
+
+    /**
      * @var \int[][]
      */
     private $gamePatterns = array();
+
+
+    /**
+     * @param Finder $finder
+     */
+    public function __construct($finder)
+    {
+        $this->finder = $finder;
+    }
 
     /**
      * @return \int[][]
@@ -44,13 +58,12 @@ class GamePatternsLoader
             return;
         }
 
-        $finder = new Finder();
-        $finder->files()
+        $this->finder->files()
             ->in($this->getGamePatternsDir())
             ->name('*.' . self::GAME_PATTERNS_FILE_EXT);
 
         /* @var SplFileInfo $file */
-        foreach ($finder as $file) {
+        foreach ($this->finder as $file) {
             $patternName = $file->getBasename('.' . self::GAME_PATTERNS_FILE_EXT);
             $this->gamePatterns[$patternName] = json_decode($file->getContents());
         }
