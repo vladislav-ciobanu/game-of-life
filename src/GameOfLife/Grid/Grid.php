@@ -148,7 +148,8 @@ class Grid
      */
     public function getNumberOfColumns()
     {
-        return count(reset($this->cells));
+        $row = reset($this->cells);
+        return $row === false ? 0 : count($row);
     }
 
     public function sortRowsByPosition()
