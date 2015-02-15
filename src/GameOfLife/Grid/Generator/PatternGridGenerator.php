@@ -34,17 +34,10 @@ class PatternGridGenerator implements GridGenerator
     }
 
     /**
-     * @param null $sourceData
-     * @param null $maxRowLimit
-     * @param null $maxColumnLimit
-     * @return Grid
+     * @inheritdoc
      */
-    public function generate($sourceData = null, $maxRowLimit = null, $maxColumnLimit = null)
+    public function generate($sourceData, $maxRowLimit = null, $maxColumnLimit = null)
     {
-        if (empty($sourceData)) {
-            throw new \InvalidArgumentException('No pattern specified');
-        }
-
         $patternName = strtolower($sourceData);
 
         $gamePatterns = $this->gamePatternsLoader->getGamePatterns();

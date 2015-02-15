@@ -17,7 +17,7 @@ class ArrayGridGenerator implements GridGenerator
    /**
      * @inheritdoc
      */
-    public function generate($sourceData = null, $maxRowLimit = null, $maxColumnLimit = null)
+    public function generate($sourceData, $maxRowLimit = null, $maxColumnLimit = null)
     {
         $grid = new Grid($maxRowLimit, $maxColumnLimit);
 
