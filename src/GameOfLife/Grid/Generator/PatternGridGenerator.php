@@ -2,7 +2,6 @@
 
 namespace GameOfLife\Grid\Generator;
 
-use GameOfLife\Grid\Grid;
 use GameOfLife\Util\GamePatternsLoader;
 
 /**
@@ -38,14 +37,12 @@ class PatternGridGenerator implements GridGenerator
      */
     public function generate($sourceData, $maxRowLimit = null, $maxColumnLimit = null)
     {
-        $patternName = strtolower($sourceData);
-
         $gamePatterns = $this->gamePatternsLoader->getGamePatterns();
 
-        if (!isset($gamePatterns[$patternName])) {
-            throw new \InvalidArgumentException('Invalid pattern ' . $patternName);
+        if (!isset($gamePatterns[$sourceData])) {
+            throw new \InvalidArgumentException('Invalid pattern ' . $sourceData);
         }
 
-        return $this->arrayGridGenerator->generate($gamePatterns[$patternName], $maxRowLimit, $maxColumnLimit);
+        return $this->arrayGridGenerator->generate($gamePatterns[$sourceData], $maxRowLimit, $maxColumnLimit);
     }
 }

@@ -35,7 +35,7 @@ class GamePatternsLoader
     }
 
     /**
-     * @return \int[][]
+     * @return \string[]\int[][]
      */
     public function getGamePatterns()
     {
