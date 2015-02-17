@@ -13,47 +13,24 @@ use GameOfLife\Grid\Grid;
  */
 class RandomGridGenerator implements GridGenerator
 {
-    /**
-     * @var int
-     */
-    private $maxRows;
+    const DEFAULT_MIN_ROWS = 3;
+    const DEFAULT_MIN_COLUMNS = 3;
+    const DEFAULT_MAX_ROWS = 10;
+    const DEFAULT_MAX_COLUMNS = 10;
 
-    /**
-     * @var int
-     */
-    private $maxCols;
-
-    /**
-     * @var int
-     */
-    private $minRows;
-
-    /**
-     * @var int
-     */
-    private $minCols;
-
-    /**
-     * @param int $maxRows
-     * @param int $maxCols
-     * @param int $minRows
-     * @param int $minCols
-     */
-    public function __construct($maxRows = 10, $maxCols = 10, $minRows = 3, $minCols = 3)
-    {
-        $this->maxRows = $maxRows;
-        $this->maxCols = $maxCols;
-        $this->minRows = $minRows;
-        $this->minCols = $minCols;
-    }
 
     /**
      * @inheritdoc
      */
     public function generate($sourceData = null, $maxRowLimit = null, $maxColumnLimit = null)
     {
-        $numberOfRows    = mt_rand($this->minRows, $this->maxRows);
-        $numberOfColumns = mt_rand($this->minCols, $this->maxCols);
+        $maxRows = $maxRowLimit === null || $maxRowLimit > self::DEFAULT_MAX_ROWS
+                ? self::DEFAULT_MAX_ROWS : $maxRowLimit;
+        $maxColumns = $maxColumnLimit === null || $maxColumnLimit > self::DEFAULT_MAX_COLUMNS
+                ? self::DEFAULT_MAX_COLUMNS : $maxColumnLimit;
+
+        $numberOfRows = mt_rand(self::DEFAULT_MIN_ROWS, $maxRows);
+        $numberOfColumns = mt_rand(self::DEFAULT_MIN_COLUMNS, $maxColumns);
 
         $grid = new Grid($maxRowLimit, $maxColumnLimit);
 
