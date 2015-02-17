@@ -11,7 +11,7 @@ class GridManager
 {
     /**
      * @param Grid $grid
-     * @param      $posY
+     * @param int  $posY
      * @param int  $cellState
      */
     public function addRow(Grid $grid, $posY, $cellState = CellState::DEAD)
@@ -36,7 +36,7 @@ class GridManager
 
     /**
      * @param Grid $grid
-     * @param      $posX
+     * @param int  $posX
      * @param int  $cellState
      */
     public function addColumn(Grid $grid, $posX, $cellState = CellState::DEAD)
