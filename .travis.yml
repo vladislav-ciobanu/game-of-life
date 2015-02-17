@@ -10,6 +10,10 @@ matrix:
   allow_failures:
     - php: hhvm
 
+addons:
+  code_climate:
+    repo_token: ea021e347f9f07cb8b3494ba29c3881962c423a063f6c99cf6e791ddbd7978b4
+
 install:
   - composer self-update
   - composer install --no-interaction
@@ -32,3 +36,4 @@ script:
 
 after_script:
   - vendor/bin/coveralls -v
+  - vendor/bin/test-reporter
