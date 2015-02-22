@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="finder" class="\Symfony\Component\Finder\Finder" />
+        <service id="gamePatternsLoader" class="\GameOfLife\Util\GamePatternsLoader">
+            <argument type="service" id="finder" />
+        </service>
+
+        <service id="conwayRuleSet" class="\GameOfLife\ConwayRuleSet" />
+        <service id="simpleNeighboursCounter" class="\GameOfLife\SimpleNeighboursCounter" />
+        <service id="gridManager" class="\GameOfLife\Grid\GridManager" />
+        <service id="simpleReplicator" class="\GameOfLife\SimpleReplicator">
+            <argument type="service" id="conwayRuleSet" />
+            <argument type="service" id="simpleNeighboursCounter" />
+            <argument type="service" id="gridManager" />
+        </service>
+
+        <service id="arrayGridGenerator" class="\GameOfLife\Grid\Generator\ArrayGridGenerator"/>
+        <service id="patternGridGenerator" class="\GameOfLife\Grid\Generator\PatternGridGenerator">
+            <argument type="service" id="gamePatternsLoader" />
+            <argument type="service" id="arrayGridGenerator" />
+        </service>
+
+        <service id="randomGridGenerator" class="\GameOfLife\Grid\Generator\RandomGridGenerator"/>
+        <service id="lifeCommand" class="\GameOfLife\LifeCommand">
+            <argument type="service" id="simpleReplicator" />
+            <argument type="service" id="patternGridGenerator" />
+            <argument type="service" id="randomGridGenerator" />
+            <argument type="service" id="gamePatternsLoader" />
+        </service>
+
+        <service id="application" class="\Symfony\Component\Console\Application">
+            <call method="add">
+                <argument type="service" id="lifeCommand" />
+            </call>
+        </service>
+    </services>
+</container>

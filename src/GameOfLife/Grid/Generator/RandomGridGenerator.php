@@ -24,10 +24,8 @@ class RandomGridGenerator implements GridGenerator
      */
     public function generate($sourceData = null, $maxRowLimit = null, $maxColumnLimit = null)
     {
-        $maxRows = $maxRowLimit === null || $maxRowLimit > self::DEFAULT_MAX_ROWS
-                ? self::DEFAULT_MAX_ROWS : $maxRowLimit;
-        $maxColumns = $maxColumnLimit === null || $maxColumnLimit > self::DEFAULT_MAX_COLUMNS
-                ? self::DEFAULT_MAX_COLUMNS : $maxColumnLimit;
+        $maxRows = $this->getMaxLimit($maxRowLimit, self::DEFAULT_MAX_ROWS);
+        $maxColumns = $this->getMaxLimit($maxColumnLimit, self::DEFAULT_MAX_COLUMNS);
 
         $numberOfRows = mt_rand(self::DEFAULT_MIN_ROWS, $maxRows);
         $numberOfColumns = mt_rand(self::DEFAULT_MIN_COLUMNS, $maxColumns);
@@ -42,5 +40,15 @@ class RandomGridGenerator implements GridGenerator
         }
 
         return $grid;
+    }
+
+    /**
+     * @param null|int $maxLimit
+     * @param int $defaultLimit
+     * @return int
+     */
+    private function getMaxLimit($maxLimit, $defaultLimit)
+    {
+        return $maxLimit === null || $maxLimit > $defaultLimit ? $defaultLimit : $maxLimit;
     }
 }
