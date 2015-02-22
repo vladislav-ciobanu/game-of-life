@@ -69,6 +69,8 @@ class LifeCommandTest extends \PHPUnit_Framework_TestCase
         $this->gridMock = $this->getMock('\GameOfLife\Grid\Grid');
 
         $this->gamePatternsLoaderMock->expects($this->once())->method('getPatternNames')->willReturn(array('testName'));
+        $this->outputMock->expects($this->at(0))->method('writeln')->with(LifeCommand::COMMAND_START_MESSAGE);
+        $this->outputMock->expects($this->at(1))->method('writeln')->with(LifeCommand::COMMAND_END_MESSAGE);
         
         $this->testSubject = new LifeCommand(
             $this->lifeMock,

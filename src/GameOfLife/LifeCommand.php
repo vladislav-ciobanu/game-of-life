@@ -29,6 +29,9 @@ class LifeCommand extends Command
     const DEFAULT_MAX_ROW_LIMIT = 40;
     const DEFAULT_PATTERN = 'random';
 
+    const COMMAND_START_MESSAGE = 'Start Life command';
+    const COMMAND_END_MESSAGE = 'End Life command';
+
     /**
      * @var Life
      */
@@ -103,11 +106,14 @@ class LifeCommand extends Command
             );
     }
 
+
+
     /**
-     * @param InputInterface $input
-     * @return void
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     * @return null|void
      */
-    protected function execute(InputInterface $input)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $grid = $this->generateGrid(
             $input->getOption(self::OPTION_PATTERN),
@@ -115,7 +121,9 @@ class LifeCommand extends Command
             $input->getOption(self::OPTION_MAX_COLUMN_LIMIT)
         );
 
+        $output->writeln(self::COMMAND_START_MESSAGE);
         $this->life->play($grid, $input->getOption(self::OPTION_MAX_NUMBER_OF_GENERATIONS));
+        $output->writeln(self::COMMAND_END_MESSAGE);
     }
 
     /**

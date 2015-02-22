@@ -20,16 +20,14 @@ class GridManager
             return;
         }
 
-        if (null === ($minPosX = $grid->getMinPositionX())) {
-            $minPosX = 0;
-        }
-
-        $maxPosX = $grid->getMaxPositionX();
-
-        for ($i = $minPosX; $i <= $maxPosX; $i++) {
-            $cell = new Cell($cellState, $i, $posY);
-            $grid->setCell($cell);
-        }
+        $this->processGridUnit(
+            $grid,
+            $grid->getMinPositionX(),
+            $grid->getMaxPositionX(),
+            function ($posX) use ($cellState, $posY) {
+                return new Cell($cellState, $posX, $posY);
+            }
+        );
 
         $grid->sortRowsByPosition();
     }
@@ -45,18 +43,33 @@ class GridManager
             return;
         }
 
-        if (null === ($minPosY = $grid->getMinPositionY())) {
-            $minPosY = 0;
-        }
-
-        $maxPosY = $grid->getMaxPositionY();
-
-        for ($i = $minPosY; $i <= $maxPosY; $i++) {
-            $cell = new Cell($cellState, $posX, $i);
-            $grid->setCell($cell);
-        }
+        $this->processGridUnit(
+            $grid,
+            $grid->getMinPositionY(),
+            $grid->getMaxPositionY(),
+            function ($posY) use ($cellState, $posX) {
+                return new Cell($cellState, $posX, $posY);
+            }
+        );
 
         $grid->sortColumnsByPosition();
+    }
+
+    /**
+     * @param Grid     $grid
+     * @param int      $gridMinPosition
+     * @param int      $maxPos
+     * @param \Closure $buildCellCallback
+     */
+    private function processGridUnit(Grid $grid, $gridMinPosition, $maxPos, \Closure $buildCellCallback)
+    {
+        if (null === ($minPos = $gridMinPosition)) {
+            $minPos = 0;
+        }
+
+        for ($i = $minPos; $i <= $maxPos; $i++) {
+            $grid->setCell($buildCellCallback($i));
+        }
     }
 
     /**
