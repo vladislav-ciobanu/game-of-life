@@ -2,7 +2,6 @@
 
 namespace GameOfLife;
 
-use GameOfLife\Grid\ConsoleGridPrinter;
 use GameOfLife\Grid\Generator\PatternGridGenerator;
 use GameOfLife\Grid\Generator\RandomGridGenerator;
 use GameOfLife\Util\GamePatternsLoader;
@@ -31,9 +30,9 @@ class LifeCommand extends Command
     const DEFAULT_PATTERN = 'random';
 
     /**
-     * @var Replicator
+     * @var Life
      */
-    private $replicator;
+    private $life;
 
     /**
      * @var PatternGridGenerator
@@ -52,18 +51,18 @@ class LifeCommand extends Command
 
 
     /**
-     * @param Replicator           $replicator
+     * @param life                 $life
      * @param PatternGridGenerator $patternGridGenerator
      * @param RandomGridGenerator  $randomGridGenerator
      * @param GamePatternsLoader   $gamePatternsLoader
      */
     public function __construct(
-        Replicator $replicator,
+        Life $life,
         PatternGridGenerator $patternGridGenerator,
         RandomGridGenerator $randomGridGenerator,
         GamePatternsLoader $gamePatternsLoader
     ) {
-        $this->replicator = $replicator;
+        $this->life = $life;
         $this->patternGridGenerator = $patternGridGenerator;
         $this->randomGridGenerator= $randomGridGenerator;
         $this->gamePatternsLoader = $gamePatternsLoader;
@@ -105,11 +104,10 @@ class LifeCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface $input
      * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input)
     {
         $grid = $this->generateGrid(
             $input->getOption(self::OPTION_PATTERN),
@@ -117,12 +115,7 @@ class LifeCommand extends Command
             $input->getOption(self::OPTION_MAX_COLUMN_LIMIT)
         );
 
-        $life = new Life(
-            $this->replicator,
-            new ConsoleGridPrinter($output)
-        );
-
-        $life->play($grid, $input->getOption(self::OPTION_MAX_NUMBER_OF_GENERATIONS));
+        $this->life->play($grid, $input->getOption(self::OPTION_MAX_NUMBER_OF_GENERATIONS));
     }
 
     /**

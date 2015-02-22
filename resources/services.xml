@@ -25,8 +25,20 @@
         </service>
 
         <service id="randomGridGenerator" class="\GameOfLife\Grid\Generator\RandomGridGenerator"/>
-        <service id="lifeCommand" class="\GameOfLife\LifeCommand">
+        <service id="consoleOutput" class="\Symfony\Component\Console\Output\ConsoleOutput" />
+        <service id="argvInput" class="\Symfony\Component\Console\Input\ArgvInput" />
+
+        <service id="consoleGridPrinter" class="\GameOfLife\Grid\ConsoleGridPrinter">
+            <argument type="service" id="consoleOutput" />
+        </service>
+
+        <service id="life" class="\GameOfLife\Life">
             <argument type="service" id="simpleReplicator" />
+            <argument type="service" id="consoleGridPrinter" />
+        </service>
+
+        <service id="lifeCommand" class="\GameOfLife\LifeCommand">
+            <argument type="service" id="life" />
             <argument type="service" id="patternGridGenerator" />
             <argument type="service" id="randomGridGenerator" />
             <argument type="service" id="gamePatternsLoader" />

@@ -32,20 +32,6 @@ final class ServiceContainer
         return static::$container->get($serviceName);
     }
 
-    /**
-     * prevent class instantiation
-     */
-    private function __construct()
-    {
-    }
-
-    /**
-     * prevent instance cloning
-     */
-    private function __clone()
-    {
-    }
-
     private static function loadContainer()
     {
         if (null !== static::$container) {
