@@ -88,17 +88,12 @@ class SimpleReplicator implements Replicator
         $minPosY = $grid->getMinPositionY();
         $maxPosY = $grid->getMaxPositionY();
 
-        $removeLeftColumn  = true;
-        $removeRightColumn = true;
+        $removeLeftColumn  = 1;
+        $removeRightColumn = 1;
 
         for ($i = $minPosY; $i <= $maxPosY; $i++) {
-            if ($this->isCellAlive($grid, $minPosX, $i)) {
-                $removeLeftColumn = false;
-            }
-
-            if ($this->isCellAlive($grid, $maxPosX, $i)) {
-                $removeRightColumn = false;
-            }
+            $this->removeCheck($removeLeftColumn, $this->isCellAlive($grid, $minPosX, $i));
+            $this->removeCheck($removeRightColumn, $this->isCellAlive($grid, $maxPosX, $i));
         }
 
         $removeLeftColumn && $this->gridManager->removeLeftColumn($grid);
@@ -115,21 +110,27 @@ class SimpleReplicator implements Replicator
         $minPosY = $grid->getMinPositionY();
         $maxPosY = $grid->getMaxPositionY();
 
-        $removeTopLine     = true;
-        $removeBottomLine  = true;
+        $removeTopRow     = 1;
+        $removeBottomRow  = 1;
 
         for ($i = $minPosX; $i <= $maxPosX; $i++) {
-            if ($this->isCellAlive($grid, $i, $minPosY)) {
-                $removeTopLine = false;
-            }
-
-            if ($this->isCellAlive($grid, $i, $maxPosY)) {
-                $removeBottomLine = false;
-            }
+            $this->removeCheck($removeTopRow, $this->isCellAlive($grid, $i, $minPosY));
+            $this->removeCheck($removeBottomRow, $this->isCellAlive($grid, $i, $maxPosY));
         }
 
-        $removeTopLine && $this->gridManager->removeTopRow($grid);
-        $removeBottomLine && $this->gridManager->removeBottomRow($grid);
+        $removeTopRow && $this->gridManager->removeTopRow($grid);
+        $removeBottomRow && $this->gridManager->removeBottomRow($grid);
+    }
+
+
+
+    /**
+     * @param int $toRemove
+     * @param bool $isCellAlive
+     */
+    private function removeCheck(&$toRemove, $isCellAlive)
+    {
+        $toRemove &= ~ (int) $isCellAlive;
     }
 
     /**
