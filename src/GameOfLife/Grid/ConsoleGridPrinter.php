@@ -68,8 +68,8 @@ class ConsoleGridPrinter implements GridPrinter
      */
     private function processCell(array &$output)
     {
-        $cellStateCharMap = self::$cellStateCharMap;
-        $cellSeparator = self::CELL_SEPARATOR;
+        $cellStateCharMap = static::$cellStateCharMap;
+        $cellSeparator = static::CELL_SEPARATOR;
 
         return function(Cell $cell) use (&$output, $cellStateCharMap, $cellSeparator) {
             array_push($output, $cellStateCharMap[$cell->getState()], $cellSeparator);
