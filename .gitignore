@@ -4,3 +4,4 @@ build/api/*
 build/code-browser/*
 build/pdepend/*
 build/coverage/*
+.idea
