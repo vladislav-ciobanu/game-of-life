@@ -69,7 +69,7 @@ class SimpleReplicator implements Replicator
         $neighboursCounter = $this->neighboursCounter;
         $ruleSet = $this->ruleSet;
 
-        return function(Cell $cell) use ($neighboursCounter, $ruleSet, $clonedGrid, $newGrid) {
+        return function (Cell $cell) use ($neighboursCounter, $ruleSet, $clonedGrid, $newGrid) {
             $nbLivingNeighbours = $neighboursCounter->countLiving($clonedGrid, $cell);
             $newCellState       = $ruleSet->apply($cell->getState(), $nbLivingNeighbours);
 

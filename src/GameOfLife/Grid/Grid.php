@@ -171,7 +171,7 @@ class Grid
     public function forEachCell(\Closure $cellClosure, \Closure $lineClosure = null)
     {
         if (null === $lineClosure) {
-            $lineClosure = function() {
+            $lineClosure = function () {
 
             };
         }
